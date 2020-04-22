@@ -1,6 +1,5 @@
 <?php
 
-/**klk*/
 
 use Slim\Factory\AppFactory;
 use Slim\Views\TwigMiddleware;

@@ -6,6 +6,7 @@ use \ProjWeb2\PRACTICA\Controller\CookieMonsterController;
 use \ProjWeb2\PRACTICA\Controller\FlashController;
 use \ProjWeb2\PRACTICA\Middleware\StartSessionMiddleware;
 use \ProjWeb2\PRACTICA\Controller\PostUserController;
+use \ProjWeb2\PRACTICA\Controller\SignUpController;
 
 
 $app->add(StartSessionMiddleware::class);
@@ -14,6 +15,16 @@ $app->get(
     '/',
     HomeController::class . ":showHomePage"
 )->setName('home');
+
+$app->get(
+    '/sign-up',
+    SignUpController::class . ":showSignUp"
+)->setName('sign-up');
+
+$app->post(
+    '/sign-up',
+    PostUserController::class . ":create"
+)->setName('sign-up');
 
 $app->get(
     '/visits',
@@ -30,7 +41,3 @@ $app->get(
     FlashController::class . ":addMessage"
 )->setName('flash');
 
-$app->post(
-    '/users',
-    PostUserController::class . ":create"
-)->setName('create_user');

@@ -9,7 +9,8 @@
         "slim/twig-view": "^3.0",
         "slim/flash": "^0.4.0",
         "symfony/dotenv": "^5.0",
-        "dflydev/fig-cookies": "^2.0"
+        "dflydev/fig-cookies": "^2.0",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {

@@ -22,8 +22,8 @@ final class MySQLUserRepository implements UserRepository
     public function save(User $user): void
     {
         $query = <<<'QUERY'
-        INSERT INTO user(email, password, created_at, updated_at)
-        VALUES(:email, :password, :created_at, :updated_at)
+        INSERT INTO user(email, password, birthday, created_at, updated_at)
+        VALUES(:email, :password, :birthday, :created_at, :updated_at)
 QUERY;
 
         $pdo = $this->database->connection();
@@ -32,11 +32,13 @@ QUERY;
 
         $email = $user->email();
         $password = $user->password();
+        $birthday = $user->birthday();
         $createdAt = $user->createdAt()->format(self::DATE_FORMAT);
         $updatedAt = $user->updatedAt()->format(self::DATE_FORMAT);
 
         $statement->bindParam('email', $email, PDO::PARAM_STR);
         $statement->bindParam('password', $password, PDO::PARAM_STR);
+        $statement->bindParam('birthday', $birthday, PDO::PARAM_STR);
         $statement->bindParam('created_at', $createdAt, PDO::PARAM_STR);
         $statement->bindParam('updated_at', $updatedAt, PDO::PARAM_STR);
 
