@@ -1,0 +1,55 @@
+{% extends "base.twig" %}
+
+{% block title %}Dashboard page{% endblock %}
+
+{% block header %}
+<header>
+    <section class="hero is-info is-medium is-bold">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <div class="tabs is-centered">
+                                <form action="{{ url_for('logout-post') }}" method="POST" >
+                                    <span class="navbar-item">
+                                        <button class="button is-light">
+                                            <span class="icon" style="color: black">
+                                                <i class="fas fa-door-open"></i>
+                                            </span>
+                                            <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+</header>
+{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight is-bold is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+                    <i class="fas fa-cogs fa-7x" aria-hidden="true"></i>
+                    <h3 class="title has-text-white">Estàs dins!</h3>
+                    <hr class="login-hr">
+                    <p class="subtitle has-text-white">Estem seguint el full de ruta per a construir aquesta pàgina...</p>
+                </div>
+                <div class="is-centered">
+                    <a class="button is-light" href="/">
+                <span class="icon" style="color: black">
+                    <i class="fas fa-home"></i>
+                </span>
+                        <span title="Hello from the other side" class="has-text-black has-text-centered">Home</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -14,6 +14,9 @@ final class User
     private string $birthday;
     private DateTime $createdAt;
     private DateTime $updatedAt;
+    private float $money;
+    private int $active;
+    private string $token;
 
     /**
      *
@@ -22,6 +25,9 @@ final class User
      * @param string $birthday
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
+     * @param float $money
+     * @param int $active
+     * @param string $token
      */
 
     public function __construct(
@@ -29,13 +35,19 @@ final class User
         string $password,
         string $birthday,
         DateTime $createdAt,
-        DateTime $updatedAt
+        DateTime $updatedAt,
+        float $money,
+        int $active,
+        string $token
     ) {
         $this->email = $email;
         $this->password = $password;
         $this->birthday = $birthday;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+        $this->money = $money;
+        $this->active = $active;
+        $this->token = $token;
     }
 
     public function id(): int
@@ -47,6 +59,21 @@ final class User
     {
         $this->id = $id;
         return $this;
+    }
+
+    public function getActive(): int
+    {
+        return $this->active;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function money(): float
+    {
+        return $this->money;
     }
 
     public function email(): string

@@ -5,11 +5,8 @@ use \ProjWeb2\PRACTICA\Controller\VisitsController;
 use \ProjWeb2\PRACTICA\Controller\CookieMonsterController;
 use \ProjWeb2\PRACTICA\Controller\FlashController;
 use \ProjWeb2\PRACTICA\Middleware\StartSessionMiddleware;
-use \ProjWeb2\PRACTICA\Controller\PostUserController;
 use \ProjWeb2\PRACTICA\Controller\SignUpController;
-
-
-$app->add(StartSessionMiddleware::class);
+use \ProjWeb2\PRACTICA\Controller\SignInController;
 
 $app->get(
     '/',
@@ -19,12 +16,32 @@ $app->get(
 $app->get(
     '/sign-up',
     SignUpController::class . ":showSignUp"
-)->setName('sign-up');
+)->setName('sign-up-view');
 
 $app->post(
     '/sign-up',
-    PostUserController::class . ":create"
-)->setName('sign-up');
+    SignUpController::class . ":create"
+)->setName('sign-up-post');
+
+$app->get(
+    '/activate',
+    SignUpController::class . ":activate"
+)->setName('activate');
+
+$app->get(
+    '/sign-in',
+    SignInController::class . ":showSignIn"
+)->setName('sign-in-view');
+
+$app->post(
+    '/sign-in',
+    SignInController::class . ":logIn"
+)->setName('sign-in-post')->add(StartSessionMiddleware::class);
+
+$app->post(
+    '/logout',
+    SignInController::class . ":logIn"
+)->setName('logout-post');
 
 $app->get(
     '/visits',

@@ -17,16 +17,14 @@ final class HomeController
 
     public function showHomePage(Request $request, Response $response): Response
     {
-        $messages = $this->container->get('flash')->getMessages();
-
-        $notifications = $messages['notifications'] ?? [];
+//        $messages = $this->container->get('flash')->getMessages();
+//
+//        $notifications = $messages['notifications'] ?? [];
 
         return $this->container->get('view')->render(
             $response,
             'home.twig',
-            [
-                'notifications' => $notifications
-            ]
+            []
         );
     }
 }

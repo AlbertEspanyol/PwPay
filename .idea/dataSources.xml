@@ -10,5 +10,11 @@
         <property name="serverTimezone" value="CET" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="pwpay@homestead" uuid="c5065412-19fa-448b-8d6a-3e4ad66decd7">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://homestead:3306/pwpay</jdbc-url>
+    </data-source>
   </component>
 </project>

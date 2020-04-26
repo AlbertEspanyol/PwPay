@@ -1,0 +1,102 @@
+{% extends "base.twig" %}
+
+{% block title %}Sign Up Page{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight is-bold is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+                    {% if isReg == true %}
+                        <h3 class="title has-text-white">Registra't</h3>
+                        <hr class="login-hr">
+                        <p class="subtitle has-text-white">Forma part de la propera superpotència!</p>
+                    {% else %}
+                        <h3 class="title has-text-white">Entra al compte</h3>
+                        <hr class="login-hr">
+                        <p class="subtitle has-text-white">Gaudeix de tots els avantatges!</p>
+                    {% endif %}
+                    <div class="box">
+
+                        {% if isReg == true %}
+                            <form action="{{ url_for('sign-up-post') }}" method="POST" >
+                        {% else %}
+                            <form action="{{ url_for('sign-in-post') }}" method="POST" >
+                        {% endif %}
+                            <div class="field">
+                                <div>
+                                    {% if emailErr != "xd" and emailErr is not empty%}
+                                        <div class="control">
+                                            <input class="input is-danger is-large has-text-black" type="email" name="email" placeholder="Your Email" autofocus="" value="{{ email }}">
+                                        </div>
+                                        <p class="has-text-danger">
+                                            {{ emailErr }}
+                                        </p>
+                                    {% else %}
+                                        <div class="control">
+                                            <input class="input is-large has-text-black" type="email" name="email" placeholder="Your email" autofocus="" value="{{ email }}">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div>
+                                    {% if passErr != "xd" and passErr is not empty%}
+                                        <div class="control">
+                                            <input class="input is-danger is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value={{ pass }}>
+                                        </div>
+                                        <p class="has-text-danger">
+                                            {{ passErr }}
+                                        </p>
+                                    {% else %}
+                                        <div class="control">
+                                            <input class="input is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value="{{ pass }}">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if isReg == true %}
+                                <hr class="is-divider is-black">
+
+                                <div class="field">
+                                    <div>
+                                        {% if birthErr != "xd" and birthErr is not empty%}
+                                            <div class="control">
+                                                <input class="input is-danger is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}">
+                                            </div>
+                                            <p class="has-text-danger">
+                                                    {{ birthErr }}
+                                            </p>
+                                        {% else %}
+                                            <div class="control">
+                                                <input class="input is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}">
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <button class="button is-block is-info is-large is-fullwidth">
+                                    Registra't
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                </button>
+                            {% else %}
+                                <button class="button is-block is-info is-large is-fullwidth">
+                                    Entra
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <p class="has-text-black">
+                        {% if isReg == true %}
+                            <a href="../">Sign In</a>
+                        {% else %}
+                            <a href="../">Sign Up</a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

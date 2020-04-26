@@ -1,6 +1,6 @@
 {
     "name": "vagrant/practica",
-    "description": "P1Web2 Andrea Berrones, Carlos Fernandez, Albert Espanyol",
+    "description": "P1Web2 Carlos Fernandez, Albert Espanyol",
     "minimum-stability": "stable",
     "require": {
         "slim/slim": "4.*",
