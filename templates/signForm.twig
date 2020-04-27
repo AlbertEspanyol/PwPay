@@ -42,18 +42,18 @@
 
                             <div class="field">
                                 <div>
-                                    {% if passErr != "xd" and passErr is not empty%}
-                                        <div class="control">
-                                            <input class="input is-danger is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value={{ pass }}>
-                                        </div>
-                                        <p class="has-text-danger">
-                                            {{ passErr }}
-                                        </p>
-                                    {% else %}
-                                        <div class="control">
-                                            <input class="input is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value="{{ pass }}">
-                                        </div>
-                                    {% endif %}
+                                        {% if passErr != "xd" and passErr is not empty%}
+                                            <div class="control">
+                                                <input class="input is-danger is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value={{ pass }}>
+                                            </div>
+                                            <p class="has-text-danger">
+                                                {{ passErr }}
+                                            </p>
+                                        {% else %}
+                                            <div class="control">
+                                                <input class="input is-large has-text-black" type="password" name="password" placeholder="Your password" autofocus="" value="{{ pass }}">
+                                            </div>
+                                        {% endif %}
                                 </div>
                             </div>
 
