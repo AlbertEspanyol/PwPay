@@ -85,6 +85,22 @@ QUERY;
         return true;
     }
 
+    public function getPass(?string $email): string
+    {
+        $query = <<<'QUERY'
+         SELECT password FROM user WHERE email = :email;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('email', $email, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC)['password'];
+    }
+
     public function checkActiveWEmail(?string $mail): bool
     {
         $query = <<<'QUERY'

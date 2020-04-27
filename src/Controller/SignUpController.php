@@ -79,7 +79,7 @@ final class SignUpController
 
             $user = new User(
                 $data['email'] ?? '',
-                $data['password'] ?? '',
+                md5($data['password']) ?? '',
                 $data['birthday'] ?? '',
                 new DateTime(),
                 new DateTime(),
@@ -106,7 +106,7 @@ final class SignUpController
                 'done' => false,
                 'icon' => 'fas fa-envelope',
                 'titleMsg' => '',
-                'subttlMsg' => 'Activa el compte accedint al teu mail'
+                'subttlMsg' => 'Activa el compte accedint a aquesta adreça: slimapp.test/activate?token=' . $token . "\n (No hem estat capaços de fer funcionar la funció mail())"
             ]
         );
     }

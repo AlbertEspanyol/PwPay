@@ -6,9 +6,7 @@ use ProjWeb2\PRACTICA\Utils\ValidationTools;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use DateTime;
 use Exception;
-use ProjWeb2\PRACTICA\Model\User;
 
 final class SignInController
 {
@@ -44,12 +42,19 @@ final class SignInController
 
             if(!$flag){
                 $errors[0] = "This user does not exist";
+            } else{
+                $checkPass = $this->container->get('user_repository')->getPass($data['email']);
+
+                if(md5($data['password']) != $checkPass){
+                    $errors[1] = "The password is incorrect";
+                }
             }
 
             if($errors[0] == "xd" && !$this->container->get('user_repository')->checkActiveWEmail($data['email'])){
                 $errors[0] = "User isn't active";
             }
 
+            //Si hi ha algún error es mostra la mateixa pantalla conservant les dades introduides
             if ($errors[0] != "xd" || $errors[1] != "xd" || $errors[2] != "xd") {
                 return $this->container->get('view')->render(
                     $response,
@@ -65,6 +70,7 @@ final class SignInController
                 );
             }
 
+            //Si tot esta correcte es mostra la dashboard
             return $this->container->get('view')->render(
                 $response,
                 'dash.twig',

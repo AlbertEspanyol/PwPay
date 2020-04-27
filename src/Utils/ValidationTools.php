@@ -15,7 +15,9 @@ final class ValidationTools{
             $errors[0] = sprintf('The email is not valid');
         }
 
-        if (strlen($password) < 6 || !preg_match("/[a-zA-Z]/",$password) || !preg_match("/[0-9]/",$password)) {
+        $passpattern = '/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/';
+
+        if (strlen($password) < 6 || !preg_match($passpattern,$password) /*|| !preg_match("/[0-9]/",$password || !preg_match('/[A-Z]/', $password))*/) {
             $errors[1] = sprintf('The password is not valid');
         }
 
