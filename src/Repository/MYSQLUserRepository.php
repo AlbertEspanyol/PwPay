@@ -8,6 +8,9 @@ use PDO;
 use ProjWeb2\PRACTICA\Model\User;
 use ProjWeb2\PRACTICA\Model\UserRepository;
 
+/***********************
+ * El DAO
+ *******************/
 final class MySQLUserRepository implements UserRepository
 {
     private const DATE_FORMAT = 'Y-m-d H:i:s';
@@ -19,6 +22,7 @@ final class MySQLUserRepository implements UserRepository
         $this->database = $database;
     }
 
+    //Es guarda l'usuari
     public function save(User $user): void
     {
         $query = <<<'QUERY'
@@ -52,6 +56,7 @@ QUERY;
         $statement->execute();
     }
 
+    //Agafa info generica d'usuari
     public function getInfo(?string $tipo): array{
 
         $pdo = $this->database->connection();
@@ -60,11 +65,13 @@ QUERY;
 
         $statement->execute();
 
+        //fetchAll = agafa totes les files i retorna un array d'arrays d'aquestes
         $st = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
 
         return $st;
     }
 
+    //Comprova si el token esta actiu
     public function checkActiveWToken(?string $token): bool
     {
         $query = <<<'QUERY'
@@ -78,6 +85,7 @@ QUERY;
 
         $statement->execute();
 
+        //S'extreu la fila que correspon a si es actiu(1) o no(0) i es comprova
         if($statement->fetch()['0'] == 0){
             return false;
         }
@@ -101,6 +109,7 @@ QUERY;
         return $statement->fetch(PDO::FETCH_ASSOC)['password'];
     }
 
+    //Comprova si l'usuari esta actiu
     public function checkActiveWEmail(?string $mail): bool
     {
         $query = <<<'QUERY'
@@ -121,7 +130,7 @@ QUERY;
         return true;
     }
 
-
+    //Activa l'usuari amb un update
     public function activateUser(?string $token): void{
 
         $query = <<<'QUERY'

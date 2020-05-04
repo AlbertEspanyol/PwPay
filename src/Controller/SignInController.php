@@ -28,6 +28,7 @@ final class SignInController
         try {
             $data = $request->getParsedBody();
 
+            //Fem la comprovacio de les dades pero fiquem birthday a null ja que en el login no es necessari
             $errors = $this->vt->isValid($data['email'], $data['password'], null);
 
             $allmails = $this->container->get('user_repository')->getInfo('email');
@@ -40,16 +41,20 @@ final class SignInController
                  }
             }
 
+            //Es comprova si l'usuari existeix
             if(!$flag){
                 $errors[0] = "This user does not exist";
             } else{
+                //Si existeix l'usuari es comprova que les contrasenyes coincideixin
                 $checkPass = $this->container->get('user_repository')->getPass($data['email']);
 
+                //md5 encripta la contrasenya per poder fer la comprovacio
                 if(md5($data['password']) != $checkPass){
                     $errors[1] = "The password is incorrect";
                 }
             }
 
+            //Es comprova a la bbdd si l'usuari no esta actiu
             if($errors[0] == "xd" && !$this->container->get('user_repository')->checkActiveWEmail($data['email'])){
                 $errors[0] = "User isn't active";
             }
@@ -70,7 +75,7 @@ final class SignInController
                 );
             }
 
-            //Si tot esta correcte es mostra la dashboard
+            //Si tot esta correcte es mostra la dashboard (S'ha de fer)
             return $this->container->get('view')->render(
                 $response,
                 'dash.twig',
