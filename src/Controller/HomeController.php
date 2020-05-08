@@ -17,14 +17,18 @@ final class HomeController
 
     public function showHomePage(Request $request, Response $response): Response
     {
-//        $messages = $this->container->get('flash')->getMessages();
-//
-//        $notifications = $messages['notifications'] ?? [];
+        $logged = true;
+
+        if (empty($_SESSION['user_id'])) {
+            $logged = false;
+        }
 
         return $this->container->get('view')->render(
             $response,
             'home.twig',
-            []
+            [
+                'logged'=> $logged
+            ]
         );
     }
 }

@@ -4,9 +4,11 @@ use \ProjWeb2\PRACTICA\Controller\HomeController;
 use \ProjWeb2\PRACTICA\Controller\VisitsController;
 use \ProjWeb2\PRACTICA\Controller\CookieMonsterController;
 use \ProjWeb2\PRACTICA\Controller\FlashController;
-use \ProjWeb2\PRACTICA\Middleware\StartSessionMiddleware;
+use \ProjWeb2\PRACTICA\Middleware\RestrictedMiddleware;
 use \ProjWeb2\PRACTICA\Controller\SignUpController;
 use \ProjWeb2\PRACTICA\Controller\SignInController;
+use \ProjWeb2\PRACTICA\Controller\LogoutController;
+use \ProjWeb2\PRACTICA\Controller\ProfileController;
 
 $app->get(
     '/',
@@ -36,12 +38,27 @@ $app->get(
 $app->post(
     '/sign-in',
     SignInController::class . ":logIn"
-)->setName('sign-in-post')->add(StartSessionMiddleware::class);
+)->setName('sign-in-post');
 
 $app->post(
     '/logout',
-    SignInController::class . ":logIn"
+    LogoutController::class
 )->setName('logout-post');
+
+$app->get(
+    '/profile',
+    ProfileController::class . ":showProfile"
+)->setName('profile-show')->add(RestrictedMiddleware::class);
+
+$app->post(
+    '/profile',
+    ProfileController::class . ":submitData"
+)->setName('profile-submit')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/profile',
+    ProfileController::class . ":showProfile"
+)->setName('profile-show')->add(RestrictedMiddleware::class);
 
 $app->get(
     '/visits',

@@ -25,7 +25,7 @@
                                     <ul>
                                         <li class="is-active"><a>Home</a></li>
                                     </ul>
-                                    {% if session is not empty %}
+                                    {% if logged %}
                                         <form action="{{ url_for('logout-post') }}" method="POST" >
                                             <span class="navbar-item">
                                                 <button class="button is-light">
@@ -107,12 +107,4 @@
             </div>
         </div>
     </section>
-
-    {% if notifications is not empty %}
-        <ol>
-            {% for notification in notifications %}
-                <li>{{ notification }}</li>
-            {% endfor %}
-        </ol>
-    {% endif %}
 {% endblock %}

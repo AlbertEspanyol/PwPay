@@ -47,6 +47,7 @@ final class ValidationTools{
         if($month < 8 && $month % 2 == 0 && $day > 30){
             return false;
         } else if ($month >= 8 && $month % 2 == 0 && $day > 31){
+
             return false;
         }
 
@@ -62,10 +63,22 @@ final class ValidationTools{
         //Si es major de 18
         if (date('Y') - $year < 18) {
             return false;
-        } else if (date('m') - $month < 0) {
-            return false;
-        } else if (date('d') - $day < 0) {
-            return false;
+        } else {
+            if (date('Y') - $year = 18)
+            {
+                if (date('m') - $month < 0)
+                {
+                    return false;
+                } else {
+                    if (date('m') - $month = 0)
+                    {
+                        if (date('d') - $day < 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
         }
 
         return true;

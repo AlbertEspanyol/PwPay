@@ -1,0 +1,132 @@
+{% extends "base.twig" %}
+
+{% block title %}Profile Page{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/profile.css"/>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <section class="hero is-info is-medium is-bold">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item" href="../">
+                                <i class="fas fa-money-bill-alt"></i>
+                                <p class="">Fpay</p>
+                            </a>
+                            <span class="navbar-burger burger" data-target="navbarMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <div class="tabs is-centered">
+                                    <ul>
+                                        <li class="is-active"><a>Home</a></li>
+                                    </ul>
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
+                                        <span class="navbar-item">
+                                            <button class="button is-light">
+                                                <span class="icon" style="color: black">
+                                                    <i class="fas fa-door-open"></i>
+                                                </span>
+                                                <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                            </button>
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight is-bold is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-10 is-offset-1">
+                    <form class="has-text-centered" action="{{ url_for('profile-submit') }}" method="POST" enctype="multipart/form-data">
+                        <div class="box">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar">
+                                        <div class="image-upload">
+                                            <label for="file-input">
+                                                <img src="{{ pfp }}"/>
+                                            </label>
+                                            <input id="file-input" type="file" accept=".png" name="avatar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <div class="field">
+                                            <div>
+                                                <p class="has-text-black">
+                                                    Your email:
+                                                </p>
+                                                <div class="control">
+                                                    <input class="input is-large has-text-black" type="email" name="email" placeholder="Your Email" autofocus="" value="{{ email }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <div>
+                                                <p class="has-text-black">
+                                                    Your birthday:
+                                                </p>
+                                                <div class="control">
+                                                    <input class="input is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="level">
+                                <div class="level-left">
+                                    {% if errors = '' %}
+                                        <div class="box has-background-dark">
+                                            <p class="has-text-centered has-text-light is-size-6">
+                                                Submit the form to see the changes in your picture
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        <div class="box has-background-danger">
+                                            <p class="has-text-centered has-text-light is-size-6">
+                                                {{ errors }}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="level-right">
+                                    <button class="button is-info is-large" id="prof">
+                                        Submit Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="level-right">
+                            <button class="button is-block is-dark" id="prof">
+                                Change Password
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

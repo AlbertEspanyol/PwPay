@@ -56,6 +56,34 @@ QUERY;
         $statement->execute();
     }
 
+    public function getId(?string $email): int{
+
+        $query = <<<'QUERY'
+         SELECT id FROM user WHERE email = :email;
+QUERY;
+
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('email', $email, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        return (int)$statement->fetch()['0'];
+    }
+
+    public function getInfoById(string $tipo, int $id) {
+
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare("SELECT " . $tipo . " FROM user WHERE id = " . $id . ";");
+
+        $statement->execute();
+
+        return $statement->fetch()['0'];
+    }
+
     //Agafa info generica d'usuari
     public function getInfo(?string $tipo): array{
 
@@ -128,6 +156,20 @@ QUERY;
         }
 
         return true;
+    }
+
+    public function updatePfp(int $id, string $path): void{
+        $query = <<<'QUERY'
+         UPDATE user SET pfp_path = :path  WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('path', $path, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
     }
 
     //Activa l'usuari amb un update

@@ -75,6 +75,10 @@ final class SignInController
                 );
             }
 
+            //Iniciem la sessió al usuari
+            $id = $this->container->get('user_repository')->getId($data['email']);
+            $_SESSION['user_id'] = $id;
+
             //Si tot esta correcte es mostra la dashboard (S'ha de fer)
             return $this->container->get('view')->render(
                 $response,
