@@ -1,3 +1,11 @@
 .hide{
     display: none;
 }
+
+#msg{
+    padding-top: 20px;
+}
+
+#full{
+    border: 10px #48c774;
+}

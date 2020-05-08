@@ -158,6 +158,21 @@ QUERY;
         return true;
     }
 
+    public function updatePass(int $id, string $newPass): void
+    {
+        $query = <<<'QUERY'
+         UPDATE user SET password = :newPass  WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('newPass', $newPass, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+    }
+
     public function updatePfp(int $id, string $path): void{
         $query = <<<'QUERY'
          UPDATE user SET pfp_path = :path  WHERE id = :id;

@@ -9,6 +9,7 @@ use \ProjWeb2\PRACTICA\Controller\SignUpController;
 use \ProjWeb2\PRACTICA\Controller\SignInController;
 use \ProjWeb2\PRACTICA\Controller\LogoutController;
 use \ProjWeb2\PRACTICA\Controller\ProfileController;
+use \ProjWeb2\PRACTICA\Controller\ChangePassController;
 
 $app->get(
     '/',
@@ -56,9 +57,14 @@ $app->post(
 )->setName('profile-submit')->add(RestrictedMiddleware::class);
 
 $app->get(
-    '/profile',
-    ProfileController::class . ":showProfile"
-)->setName('profile-show')->add(RestrictedMiddleware::class);
+    '/profile/security',
+    ChangePassController::class . ":showPass"
+)->setName('pass-change-show')->add(RestrictedMiddleware::class);
+
+$app->post(
+    '/profile/security',
+    ChangePassController::class . ":applyChange"
+)->setName('pass-change-apply')->add(RestrictedMiddleware::class);
 
 $app->get(
     '/visits',

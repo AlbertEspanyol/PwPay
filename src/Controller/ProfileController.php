@@ -86,7 +86,6 @@ final class ProfileController
                 } else {
                     $this->errors = 'Could not upload the file;';
                 }
-
             } else {
                 return $this->showProfile($request, $response);
             }

@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% block title %}Profile Page{% endblock %}
+{% block title %}Change Password Page{% endblock %}
 
 {% block styles %}
     <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/profile.css"/>
@@ -53,41 +53,59 @@
     <section class="hero is-fullheight is-bold is-info">
         <div class="hero-body">
             <div class="container has-text-centered">
-                <div class="column is-10 is-offset-1">
-                    <form class="has-text-centered" action="{{ url_for('profile-submit') }}" method="POST" enctype="multipart/form-data">
+                <div class="column is-6 is-offset-3">
+                    <form class="has-text-centered" action="{{ url_for('pass-change-apply') }}" method="POST" enctype="multipart/form-data">
                         <div class="box">
                             <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar">
-                                        <div class="image-upload">
-                                            <label for="file-input">
-                                                <img src="{{ pfp }}"/>
-                                            </label>
-                                            <input id="file-input" type="file" accept=".png" name="avatar"/>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="media-content">
                                     <div class="content">
                                         <div class="field">
                                             <div>
                                                 <p class="has-text-black">
-                                                    Your email:
+                                                    Enter your old password:
                                                 </p>
+                                                {% if errorOld == 'xd' %}
                                                 <div class="control">
-                                                    <input class="input is-large has-text-black" type="email" name="email" placeholder="Your Email" autofocus="" value="{{ email }}" disabled>
+                                                    <input class="input is-large has-text-black" type="password" name="old_password" placeholder="Old password" autofocus="">
                                                 </div>
+                                                {% else %}
+                                                <div class="control">
+                                                    <input class="input is-danger is-large has-text-black" type="password" name="old_password" placeholder="Old password" autofocus="">
+                                                </div>
+                                                <p class="has-text-danger has-text-centered">
+                                                    {{ errorOld }}
+                                                </p>
+                                                {% endif %}
                                             </div>
                                         </div>
 
                                         <div class="field">
                                             <div>
                                                 <p class="has-text-black">
-                                                    Your birthday:
+                                                    Enter your new password:
                                                 </p>
                                                 <div class="control">
-                                                    <input class="input is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}" disabled>
+                                                    <input class="input is-large has-text-black" type="password" name="new_password" placeholder="New password" autofocus="">
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div>
+                                                <p class="has-text-black">
+                                                    Confirm:
+                                                </p>
+                                                {% if errorConf == 'xd' %}
+                                                <div class="control">
+                                                    <input class="input is-large has-text-black" type="password" name="confirm_password" placeholder="Confirm password" autofocus="">
+                                                </div>
+                                                {% else %}
+                                                <div class="control">
+                                                    <input class="input is-danger is-large has-text-black" type="password" name="confirm_password" placeholder="Confirm password" autofocus="">
+                                                </div>
+                                                <p class="has-text-danger has-text-centered">
+                                                    {{ errorConf }}
+                                                </p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -95,33 +113,18 @@
                             </div>
                             <div class="level">
                                 <div class="level-left">
-                                    {% if errors == '' %}
-                                        <div class="box has-background-dark">
-                                            <p class="has-text-centered has-text-light is-size-6">
-                                                Submit the form to see the changes in your picture
-                                            </p>
-                                        </div>
-                                    {% else %}
-                                        <div class="box has-background-danger">
-                                            <p class="has-text-centered has-text-light is-size-6">
-                                                {{ errors }}
-                                            </p>
+                                    {% if ok != 'xd' %}
+                                        <div id="msg" class="box has-background-success level-left has-text-centered has-text-white is-size-6">
+                                            Password changed successfully
                                         </div>
                                     {% endif %}
                                 </div>
                                 <div class="level-right">
                                     <button class="button is-info is-large" id="prof">
-                                        Submit Changes
+                                        Change Password
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <form action="{{ url_for('pass-change-show') }}" method="GET">
-                        <div class="level-right">
-                            <button class="button is-block is-dark" id="prof">
-                                Change Password
-                            </button>
                         </div>
                     </form>
                 </div>
