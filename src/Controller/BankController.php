@@ -18,5 +18,4 @@ final class BankController {
         $this->vt = new ValidationTools();
     }
 
-
 }
