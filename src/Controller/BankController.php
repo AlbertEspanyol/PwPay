@@ -18,4 +18,11 @@ final class BankController {
         $this->vt = new ValidationTools();
     }
 
+    public function submitBank(Request $request, Response $response): Response
+    {
+        if(empty($_POST)){
+            exit;
+        }
+    }
+
 }

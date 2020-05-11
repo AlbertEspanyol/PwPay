@@ -67,9 +67,9 @@
                                             <p class="has-text-grey has-text-centered">
                                                 {{ iban }}
                                                 {% if iban == 'You have not linked your bank account yet' %}
-                                            <form action="{{ url_for('pass-change-show') }}" method="GET">
+                                            <form action="{{ url_for('bank-form-show') }}" method="GET">
                                                 <div class="level-right">
-                                                    <button class="button is-fullwidth is-large is-danger">
+                                                    <button class="button is-fullwidth is-large is-link">
                                                         <span style="color: limegreen" class="icon">
                                                              <i class="fas fa-piggy-bank"></i>
                                                         </span>

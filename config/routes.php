@@ -90,12 +90,12 @@ $app->get(
 
 $app->get(
     '/account/bank-account',
-    BankController::class . ":addMessage"
+    DashController::class . ":showBankForm"
 )->setName('bank-form-show');
 
 $app->post(
     '/account/bank-account',
-    BankController::class . ":addMessage"
+    BankController::class . ":submitBank"
 )->setName('bank-form-submit');
 
 $app->post(
