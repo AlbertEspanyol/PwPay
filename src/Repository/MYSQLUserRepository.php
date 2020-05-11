@@ -243,7 +243,7 @@ QUERY;
 
         $statement = $pdo->prepare($query);
 
-        $statement->bindParam('cash', $chash, PDO::PARAM_STR);
+        $statement->bindParam('cash', $cash, PDO::PARAM_STR);
         $statement->bindParam('id', $id, PDO::PARAM_STR);
 
         $statement->execute();
