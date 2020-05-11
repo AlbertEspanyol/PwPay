@@ -219,4 +219,33 @@ QUERY;
 
         $statement->execute();
     }
+
+    public function updateBankAndOwner(int $id, string $iban, string $owner) :void{
+        $query = <<<'QUERY'
+         UPDATE user SET bank_owner = :owner, iban = :iban WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('owner', $owner, PDO::PARAM_STR);
+        $statement->bindParam('iban', $iban, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+    }
+
+    public function updateMoney(int $id, float $cash) :void{
+        $query = <<<'QUERY'
+         UPDATE user SET money = money + :cash WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('cash', $chash, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+    }
 }

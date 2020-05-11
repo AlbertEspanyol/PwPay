@@ -17,4 +17,5 @@ interface UserRepository
     public function updatePfp(int $id, string $path): void;
     public function activateUser(?string $token): void;
     public function updateModifyDate(int $id) :void;
+    public function updateBankAndOwner(int $id, string $iban, string $owner) :void;
 }

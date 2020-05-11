@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://homestead:3306</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="pwpay@homestead" uuid="84197b72-260f-410f-8fc1-b419814f25a8">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://homestead:3306/pwpay</jdbc-url>
+    </data-source>
   </component>
 </project>

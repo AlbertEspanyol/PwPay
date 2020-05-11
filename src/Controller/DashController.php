@@ -88,21 +88,4 @@ final class DashController {
             ]
         );
     }
-
-    public function showBankForm(Request $request, Response $response): Response
-    {
-        if (empty($_SESSION['counter'])) {
-            $_SESSION['counter'] = 1;
-        } else {
-            $_SESSION['counter']++;
-        }
-
-        return $this->container->get('view')->render(
-            $response,
-            'bankForm.twig',
-            [
-                'visits' => $_SESSION['counter'],
-            ]
-        );
-    }
 }

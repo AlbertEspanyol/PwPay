@@ -2,39 +2,101 @@
 
 {% block title %}Sign Up Page{% endblock %}
 
+{% block header %}
+    <header>
+        <section class="hero is-info is-medium is-bold">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item" href="../">
+                                <i class="fas fa-money-bill-alt"></i>
+                                <p class="">Fpay</p>
+                            </a>
+                            <span class="navbar-burger burger" data-target="navbarMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <div class="tabs is-centered">
+                                    <ul>
+                                        <li class="is-active"><a>Home</a></li>
+                                    </ul>
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
+                                        <span class="navbar-item">
+                                            <button class="button is-light">
+                                                <span class="icon" style="color: black">
+                                                    <i class="fas fa-door-open"></i>
+                                                </span>
+                                                <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                            </button>
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </header>
+{% endblock %}
+
 {% block body %}
     <section class="hero is-fullheight is-bold is-info">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <div class="column is-4 is-offset-4">
-                    {% if isReg == true %}
-                        <h3 class="title has-text-white">Registra't</h3>
+                    {% if isLoad %}
+                        <h3 class="title has-text-white">Carrega diners</h3>
                         <hr class="login-hr">
-                        <p class="subtitle has-text-white">Forma part de la propera superpotència!</p>
+                        <div class="box">
+                            <form action="{{ url_for('bank-account-load') }}" method="POST" >
+                                <h3 class="title has-text-black has-text-centered">{{ iban|slice(0,4) }} {{ iban|slice(4,5)[0:2] }}</h3>
+                                <hr class="login-hr">
+                                <div class="field">
+                                    <div>
+                                        {% if moneyErr != "xd" and moneyErr is not empty%}
+                                            <div class="control">
+                                                <input class="input is-danger is-large has-text-black" name="money" placeholder="Dat Cash" autofocus="" value="{{ money }}">
+                                            </div>
+                                            <p class="has-text-danger">
+                                                {{ moneyErr }}
+                                            </p>
+                                        {% else %}
+                                            <div class="control">
+                                                <input class="input is-large has-text-black" name="money" placeholder="Dat cash" autofocus="" value="{{ money }}">
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <button class="button is-block is-info is-large is-fullwidth">
+                                    Afegeix
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
                     {% else %}
-                        <h3 class="title has-text-white">Registra el teu compte bancari</h3>
-                        <hr class="login-hr">
-                        <p class="subtitle has-text-white">Aprofita els avantatges associant un compte</p>
-                    {% endif %}
+                    <h3 class="title has-text-white">Registra el teu compte bancari</h3>
+                    <hr class="login-hr">
+                    <p class="subtitle has-text-white">Aprofita els avantatges associant un compte</p>
                     <div class="box">
-
-                        {% if isReg == true %}
-                            <form action="{{ url_for('bank-form-submit') }}" method="POST" >
-                        {% else %}
-                            <form action="{{ url_for('bank-form-submit') }}" method="POST" >
-                        {% endif %}
+                        <form action="{{ url_for('bank-form-submit') }}" method="POST" >
                             <div class="field">
                                 <div>
-                                    {% if emailErr != "xd" and emailErr is not empty%}
+                                    {% if ownerErr != "xd" and ownerErr is not empty%}
                                         <div class="control">
-                                            <input class="input is-danger is-large has-text-black" name="email" placeholder="Owner name" autofocus="" value="{{ email }}">
+                                            <input class="input is-danger is-large has-text-black" name="owner_name" placeholder="Owner name" autofocus="" value="{{ owner_name }}">
                                         </div>
                                         <p class="has-text-danger">
-                                            {{ emailErr }}
+                                            {{ ownerErr }}
                                         </p>
                                     {% else %}
                                         <div class="control">
-                                            <input class="input is-large has-text-black" name="email" placeholder="Owner name" autofocus="" value="{{ email }}">
+                                            <input class="input is-large has-text-black" name="owner_name" placeholder="Owner name" autofocus="" value="{{ owner_name }}">
                                         </div>
                                     {% endif %}
                                 </div>
@@ -42,59 +104,27 @@
 
                             <div class="field">
                                 <div>
-                                        {% if passErr != "xd" and passErr is not empty%}
+                                        {% if ibanErr != "xd" and ibanErr is not empty%}
                                             <div class="control">
-                                                <input class="input is-danger is-large has-text-black"  name="password" placeholder="Your IBAN" autofocus="" value={{ pass }}>
+                                                <input class="input is-danger is-large has-text-black"  name="iban" placeholder="Your IBAN" autofocus="" value={{ iban }}>
                                             </div>
                                             <p class="has-text-danger">
-                                                {{ passErr }}
+                                                {{ ibanErr }}
                                             </p>
                                         {% else %}
                                             <div class="control">
-                                                <input class="input is-large has-text-black" name="password" placeholder="Your IBAN" autofocus="" value="{{ pass }}">
+                                                <input class="input is-large has-text-black" name="iban" placeholder="Your IBAN" autofocus="" value="{{ iban }}">
                                             </div>
                                         {% endif %}
                                 </div>
                             </div>
-
-                            {% if isReg == true %}
-                                <hr class="is-divider is-black">
-
-                                <div class="field">
-                                    <div>
-                                        {% if birthErr != "xd" and birthErr is not empty%}
-                                            <div class="control">
-                                                <input class="input is-danger is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}">
-                                            </div>
-                                            <p class="has-text-danger">
-                                                    {{ birthErr }}
-                                            </p>
-                                        {% else %}
-                                            <div class="control">
-                                                <input class="input is-large has-text-black" type="date" name="birthday" placeholder="Your Birthday" autofocus="" value="{{ birth }}">
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <button class="button is-block is-info is-large is-fullwidth">
-                                    Registra't
-                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                </button>
-                            {% else %}
-                                <button class="button is-block is-info is-large is-fullwidth">
-                                    Associar
-                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                </button>
-                            {% endif %}
+                            <button class="button is-block is-info is-large is-fullwidth">
+                                Associar
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </button>
                         </form>
                     </div>
-                    <p class="has-text-black">
-                        {% if isReg == true %}
-                            <a href="sign-in">Sign In</a>
-                        {% else %}
-                            <a href="sign-up">Sign Up</a>
-                        {% endif %}
-                    </p>
+                    {% endif %}
                 </div>
             </div>
         </div>

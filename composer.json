@@ -13,7 +13,8 @@
         "ext-pdo": "*",
         "phpmailer/phpmailer": "^6.1",
       "ext-gd": "*",
-        "twig/intl-extra": "^3.0"
+        "twig/intl-extra": "^3.0",
+        "jschaedl/iban-validation": "^1.5"
     },
     "autoload": {
         "psr-4": {

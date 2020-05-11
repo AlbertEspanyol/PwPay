@@ -90,7 +90,7 @@ $app->get(
 
 $app->get(
     '/account/bank-account',
-    DashController::class . ":showBankForm"
+    BankController::class . ":showBankForm"
 )->setName('bank-form-show');
 
 $app->post(
@@ -100,5 +100,5 @@ $app->post(
 
 $app->post(
     '/account/bank-account/load',
-    BankController::class . ":addMessage"
+    BankController::class . ":addMoney"
 )->setName('bank-account-load');
