@@ -40,6 +40,7 @@ final class ChangePassController
             if($this->errors[0] == 'xd'&& $this->errors[1] == 'xd'){
                 $this->errors[2] = 'ok';
                 $this->container->get('user_repository')->updatePass($id, md5($new));
+                $this->container->get('user_repository')->updateModifyDate($id);
             }
         }
 

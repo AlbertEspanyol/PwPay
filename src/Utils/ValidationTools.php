@@ -64,13 +64,13 @@ final class ValidationTools{
         if (date('Y') - $year < 18) {
             return false;
         } else {
-            if (date('Y') - $year = 18)
+            if (date('Y') - $year == 18)
             {
                 if (date('m') - $month < 0)
                 {
                     return false;
                 } else {
-                    if (date('m') - $month = 0)
+                    if (date('m') - $month == 0)
                     {
                         if (date('d') - $day < 0)
                         {

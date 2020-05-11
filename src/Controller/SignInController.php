@@ -80,11 +80,8 @@ final class SignInController
             $_SESSION['user_id'] = $id;
 
             //Si tot esta correcte es mostra la dashboard (S'ha de fer)
-            return $this->container->get('view')->render(
-                $response,
-                'dash.twig',
-                []
-            );
+            return $response->withHeader('Location', '/account/summary')->withStatus(302);
+
 
         } catch (Exception $exception) {
             $response->getBody()

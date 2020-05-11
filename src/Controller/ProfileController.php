@@ -23,7 +23,7 @@ final class ProfileController
         $id = $_SESSION['user_id'];
 
         //Si hi ha algun fitxer penjat procedeix
-        if(isset($_FILES)) {
+        if(!empty($_FILES['avatar']['name'])) {
 
             //Es declara la carpeta on aniran a parar els fitxers
             $target_dir = "uploads/";
@@ -34,8 +34,14 @@ final class ProfileController
             //S'agafa la localitzacio temporal del fitxer
             $tmp = $_FILES['avatar']['tmp_name'];
 
-            //Es crea un nou nom unic pel fitxer
-            $newname = $id . "_pfp." . $ext[1];
+            //Es crea un nou nom unic pel fitxer basat amb el que l'usuari utilitzava anteriorment
+            $path = $this->container->get('user_repository')->getInfoById('pfp_path', $id);
+            if($path != 'Unknown'){
+                $num = intval($path[0]) + 1;
+                $newname = $num . "_" . $id . "_pfp." . $ext[1];
+            } else{
+                $newname = "0_" . $id . "_pfp." . $ext[1];
+            }
 
             //S'ajunta la carpeta amb el nom per crear un path definitiu
             $target_file = $target_dir . $newname;
@@ -83,6 +89,7 @@ final class ProfileController
                 //Mou la imatge de la carpeta temporal a la que nosaltres volem i si funciona s'afegeix el path a la base de dades
                 if (move_uploaded_file($_FILES['avatar']['tmp_name'], $target_file)) {
                     $this->container->get('user_repository')->updatePfp($id, $target_file);
+                    $this->container->get('user_repository')->updateModifyDate($id);
                 } else {
                     $this->errors = 'Could not upload the file;';
                 }
@@ -105,7 +112,7 @@ final class ProfileController
 
         //Agafa totes les dades de la bbdd
         $path = $this->container->get('user_repository')->getInfoById('pfp_path', $id);
-        if(empty($path)) $path = "https://placehold.it/400x400";
+        if($path == 'Unknown') $path = "https://placehold.it/400x400";
         $email = $this->container->get('user_repository')->getInfoById('email', $id);
         $birth = $this->container->get('user_repository')->getInfoById('birthday', $id);
 

@@ -8,6 +8,8 @@ use PDO;
 use ProjWeb2\PRACTICA\Model\User;
 use ProjWeb2\PRACTICA\Model\UserRepository;
 
+use DateTime;
+
 /***********************
  * El DAO
  *******************/
@@ -34,12 +36,12 @@ QUERY;
 
         $statement = $pdo->prepare($query);
 
-        $email = $user->email();
-        $password = $user->password();
-        $birthday = $user->birthday();
-        $createdAt = $user->createdAt()->format(self::DATE_FORMAT);
-        $updatedAt = $user->updatedAt()->format(self::DATE_FORMAT);
-        $money = $user->money();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $birthday = $user->getBirthday();
+        $createdAt = $user->getCreatedAt()->format(self::DATE_FORMAT);
+        $updatedAt = $user->getUpdatedAt()->format(self::DATE_FORMAT);
+        $money = $user->getMoney();
         $token = $user->getToken();
         $active = $user->getActive();
 
@@ -81,7 +83,7 @@ QUERY;
 
         $statement->execute();
 
-        return $statement->fetch()['0'];
+        return $statement->fetch()['0']??'Unknown';
     }
 
     //Agafa info generica d'usuari
@@ -198,6 +200,22 @@ QUERY;
         $statement = $pdo->prepare($query);
 
         $statement->bindParam('token', $token, PDO::PARAM_STR);
+
+        $statement->execute();
+    }
+
+    public function updateModifyDate(int $id) :void{
+        $query = <<<'QUERY'
+         UPDATE user SET updated_at = :date_now WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $date = new DateTime();
+
+        $statement->bindValue('date_now', $date->format(self::DATE_FORMAT), PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
 
         $statement->execute();
     }

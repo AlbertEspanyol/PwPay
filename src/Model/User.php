@@ -19,7 +19,7 @@ final class User
     private string $token;
 
     /**
-     *
+     * User constructor.
      * @param string $email
      * @param string $password
      * @param string $birthday
@@ -29,17 +29,8 @@ final class User
      * @param int $active
      * @param string $token
      */
-
-    public function __construct(
-        string $email,
-        string $password,
-        string $birthday,
-        DateTime $createdAt,
-        DateTime $updatedAt,
-        float $money,
-        int $active,
-        string $token
-    ) {
+    public function __construct(string $email, string $password, string $birthday, DateTime $createdAt, DateTime $updatedAt, float $money, int $active, string $token)
+    {
         $this->email = $email;
         $this->password = $password;
         $this->birthday = $birthday;
@@ -50,54 +41,149 @@ final class User
         $this->token = $token;
     }
 
-    public function id(): int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id): self
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
         $this->id = $id;
-        return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBirthday(): string
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param string $birthday
+     */
+    public function setBirthday(string $birthday): void
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMoney(): float
+    {
+        return $this->money;
+    }
+
+    /**
+     * @param float $money
+     */
+    public function setMoney(float $money): void
+    {
+        $this->money = $money;
+    }
+
+    /**
+     * @return int
+     */
     public function getActive(): int
     {
         return $this->active;
     }
 
+    /**
+     * @param int $active
+     */
+    public function setActive(int $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return string
+     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    public function money(): float
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
     {
-        return $this->money;
+        $this->token = $token;
     }
 
-    public function email(): string
-    {
-        return $this->email;
-    }
 
-    public function password(): string
-    {
-        return $this->password;
-    }
-
-    public function birthday(): string
-    {
-        return $this->birthday;
-    }
-
-    public function createdAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function updatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
 }

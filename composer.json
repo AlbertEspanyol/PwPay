@@ -12,7 +12,8 @@
         "dflydev/fig-cookies": "^2.0",
         "ext-pdo": "*",
         "phpmailer/phpmailer": "^6.1",
-      "ext-gd": "*"
+      "ext-gd": "*",
+        "twig/intl-extra": "^3.0"
     },
     "autoload": {
         "psr-4": {

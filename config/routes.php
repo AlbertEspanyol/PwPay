@@ -10,6 +10,7 @@ use \ProjWeb2\PRACTICA\Controller\SignInController;
 use \ProjWeb2\PRACTICA\Controller\LogoutController;
 use \ProjWeb2\PRACTICA\Controller\ProfileController;
 use \ProjWeb2\PRACTICA\Controller\ChangePassController;
+use \ProjWeb2\PRACTICA\Controller\DashController;
 
 $app->get(
     '/',
@@ -65,6 +66,11 @@ $app->post(
     '/profile/security',
     ChangePassController::class . ":applyChange"
 )->setName('pass-change-apply')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/summary',
+    DashController::class . ":showDash"
+)->setName('dash-show')->add(RestrictedMiddleware::class);
 
 $app->get(
     '/visits',

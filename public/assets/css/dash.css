@@ -14,13 +14,17 @@
     opacity: 80%;
 }
 
+.date{
+    padding-left: 10px;
+}
+
 .image-upload>input {
     display: none;
 }
 
 .avatar {
-    margin-top: -100px;
-    padding-bottom: 20px;
+    margin-top: -50px;
+    padding-bottom: 0;
 }
 
 .avatar img {

@@ -4,6 +4,7 @@ use DI\Container;
 use Slim\Views\Twig;
 use Slim\Flash\Messages;
 use ProjWeb2\PRACTICA\Repository\MySQLUserRepository;
+use ProjWeb2\PRACTICA\Repository\MYSQLTransactionRepository;
 use ProjWeb2\PRACTICA\Repository\PDOSingleton;
 use Psr\Container\ContainerInterface;
 
@@ -35,4 +36,8 @@ $container->set('db', function () {
 
 $container->set('user_repository', function (ContainerInterface $container) {
     return new MySQLUserRepository($container->get('db'));
+});
+
+$container->set('transaction_repository', function (ContainerInterface $container) {
+    return new MYSQLTransactionRepository($container->get('db'));
 });
