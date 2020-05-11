@@ -66,6 +66,14 @@
                                             <hr class="login">
                                             <p class="has-text-grey has-text-centered">
                                                 {{ iban }}
+                                                {% if iban == 'You have not linked your bank account yet' %}
+                                                    <button class="button is-fullwidth is-large is-dark">
+                                                        <span style="color: limegreen" class="icon">
+                                                             <i class="fas fa-piggy-bank"></i>
+                                                        </span>
+                                                        <span title="Hello from the other side" class=" title has-text-centered">BANK ACCOUNT</span>
+                                                    </button>
+                                                {% endif %}
                                             </p>
                                         </div>
                                     </div>

@@ -64,7 +64,7 @@ final class DashController {
 
 
         if($iban == 'Unknown'){
-            $iban = "You haven't linked your bank account yet";
+            $iban = "You have not linked your bank account yet";
         }
 
         /*******

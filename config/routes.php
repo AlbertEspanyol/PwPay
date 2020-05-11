@@ -11,6 +11,7 @@ use \ProjWeb2\PRACTICA\Controller\LogoutController;
 use \ProjWeb2\PRACTICA\Controller\ProfileController;
 use \ProjWeb2\PRACTICA\Controller\ChangePassController;
 use \ProjWeb2\PRACTICA\Controller\DashController;
+use \ProjWeb2\PRACTICA\Controller\BankController;
 
 $app->get(
     '/',
@@ -87,3 +88,17 @@ $app->get(
     FlashController::class . ":addMessage"
 )->setName('flash');
 
+$app->get(
+    '/account/bank-account',
+    BankController::class . ":addMessage"
+)->setName('bank-form-show');
+
+$app->post(
+    '/account/bank-account',
+    BankController::class . ":addMessage"
+)->setName('bank-form-submit');
+
+$app->post(
+    '/account/bank-account/load',
+    BankController::class . ":addMessage"
+)->setName('bank-account-load');
