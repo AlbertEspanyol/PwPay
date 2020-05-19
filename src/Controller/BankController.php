@@ -86,7 +86,7 @@ final class BankController {
             [
                 'isLoad'=> !($checkEx == 'Unknown'),
                 'ibanErr'=> $this->ibanErr,
-                'iban'=>$this->iban,
+                'iban'=>$checkEx,
                 'owner_name'=>$this->owner
             ]
         );

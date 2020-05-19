@@ -91,14 +91,19 @@ $app->get(
 $app->get(
     '/account/bank-account',
     BankController::class . ":showBankForm"
-)->setName('bank-form-show');
+)->setName('bank-form-show')->add(RestrictedMiddleware::class);
 
 $app->post(
     '/account/bank-account',
     BankController::class . ":submitBank"
-)->setName('bank-form-submit');
+)->setName('bank-form-submit')->add(RestrictedMiddleware::class);
 
 $app->post(
     '/account/bank-account/load',
     BankController::class . ":addMoney"
+)->setName('bank-account-load')->add(RestrictedMiddleware::class);
+
+$app->any(
+    '/[]',
+    ErrorController::class . ":showError"
 )->setName('bank-account-load');
