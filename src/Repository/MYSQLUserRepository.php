@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProjWeb2\PRACTICA\Repository;
 
 use PDO;
+use ProjWeb2\PRACTICA\Model\Transaction;
 use ProjWeb2\PRACTICA\Model\User;
 use ProjWeb2\PRACTICA\Model\UserRepository;
 
@@ -239,13 +240,48 @@ QUERY;
         $query = <<<'QUERY'
          UPDATE user SET money = money + :cash WHERE id = :id;
 QUERY;
+        $query2 = <<<'QUERY'
+        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual,)
+        VALUES(:email, :password, :birthday, :created_at, :updated_at, :money, :active, :token)
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+        $statement2 = $pdo->prepare($query2);
+
+        $date = new DateTime();
+        $tipo = "ingres propi";
+
+        $statement->bindParam('cash', $cash, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+        $statement2->bindValue('date_now', $date->format(self::DATE_FORMAT), PDO::PARAM_STR);
+        $statement2->bindParam('cash', $cash, PDO::PARAM_STR);
+        $statement2->bindParam('id', $id, PDO::PARAM_STR);
+        $statement2->bindParam('tipo', $tipo, PDO::PARAM_STR);
+
+        $statement->execute();
+        $statement2->execute();
+    }
+
+    public function getTransactions(int $id) :void{
+        $query = <<<'QUERY'
+         SELECT user WHERE source_user = :id OR dest_user = :id;
+QUERY;
         $pdo = $this->database->connection();
 
         $statement = $pdo->prepare($query);
 
-        $statement->bindParam('cash', $cash, PDO::PARAM_STR);
         $statement->bindParam('id', $id, PDO::PARAM_STR);
 
         $statement->execute();
+
+        $transactions = new Transaction[];
+        $i = 0;
+        while($row = mysql_fetch_assoc($query)){
+            $transactions[$i]->tipo = $row;
+            $i++;
+        }
+
+        echo json_encode($transactions);
     }
 }

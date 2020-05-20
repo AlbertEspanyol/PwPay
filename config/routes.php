@@ -12,6 +12,7 @@ use \ProjWeb2\PRACTICA\Controller\ProfileController;
 use \ProjWeb2\PRACTICA\Controller\ChangePassController;
 use \ProjWeb2\PRACTICA\Controller\DashController;
 use \ProjWeb2\PRACTICA\Controller\BankController;
+use \ProjWeb2\PRACTICA\Controller\TransactionController;
 
 $app->get(
     '/',
@@ -102,3 +103,9 @@ $app->post(
     '/account/bank-account/load',
     BankController::class . ":addMoney"
 )->setName('bank-account-load');
+
+$app->get(
+    '/account/transactions',
+    TransactionController::class . ":showTransactions"
+)->setName('transactions');
+
