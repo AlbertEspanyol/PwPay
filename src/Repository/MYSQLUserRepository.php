@@ -263,7 +263,7 @@ QUERY;
         $statement2->execute();
     }
 
-    public function getTransactions(int $id) :void{
+    public function getTransactions(int $id) : array{
         $query = <<<'QUERY'
          SELECT user WHERE source_user = :id OR dest_user = :id;
 QUERY;
@@ -275,13 +275,13 @@ QUERY;
 
         $statement->execute();
 
-        $transactions = new Transaction[];
-        $i = 0;
+        $transactions = array();
         while($row = mysql_fetch_assoc($query)){
-            $transactions[$i]->tipo = $row;
-            $i++;
+            array_push($transactions,$row);
         }
 
         echo json_encode($transactions);
+
+        return $transactions;
     }
 }
