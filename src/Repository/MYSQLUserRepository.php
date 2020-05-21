@@ -241,8 +241,8 @@ QUERY;
          UPDATE user SET money = money + :cash WHERE id = :id;
 QUERY;
         $query2 = <<<'QUERY'
-        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual,)
-        VALUES(:email, :password, :birthday, :created_at, :updated_at, :money, :active, :token)
+        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual)
+        VALUES(:id, :id, :cash, :tipo, :tipo, :date_now)
 QUERY;
         $pdo = $this->database->connection();
 
@@ -261,27 +261,5 @@ QUERY;
 
         $statement->execute();
         $statement2->execute();
-    }
-
-    public function getTransactions(int $id) : array{
-        $query = <<<'QUERY'
-         SELECT user WHERE source_user = :id OR dest_user = :id;
-QUERY;
-        $pdo = $this->database->connection();
-
-        $statement = $pdo->prepare($query);
-
-        $statement->bindParam('id', $id, PDO::PARAM_STR);
-
-        $statement->execute();
-
-        $transactions = array();
-        while($row = mysql_fetch_assoc($query)){
-            array_push($transactions,$row);
-        }
-
-        echo json_encode($transactions);
-
-        return $transactions;
     }
 }

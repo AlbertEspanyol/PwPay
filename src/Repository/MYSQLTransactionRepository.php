@@ -24,8 +24,8 @@ final class MYSQLTransactionRepository implements TransactionRepository
     public function addTransaction(Transaction $trans): void
     {
         $query = <<<'QUERY'
-        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data)
-        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data)
+        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual)
+        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data);
 QUERY;
         $pdo = $this->database->connection();
 
@@ -51,7 +51,7 @@ QUERY;
     public function getLatest5Trans(int $id): array
     {
         $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data DESC LIMIT 5;
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC LIMIT 5;
 QUERY;
         $pdo = $this->database->connection();
 
@@ -74,7 +74,7 @@ QUERY;
                     floatval($field['money']),
                     $field['tipo'],
                     $field['motiu'],
-                    DateTime::createFromFormat(self::DATE_FORMAT,$field['data'])
+                    DateTime::createFromFormat(self::DATE_FORMAT,$field['data_actual'])
                 );
             }
         }
@@ -86,6 +86,28 @@ QUERY;
     public function updateStatus(int $id): void
     {
         // TODO: Implement updateStatus() method.
+    }
+
+    public function getTransactions(int $id) : array{
+        $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $transactions = array();
+        while ($row = $statement->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            array_push($transactions,$row);
+        }
+
+        echo json_encode($transactions);
+
+        return $transactions;
     }
 }
 
