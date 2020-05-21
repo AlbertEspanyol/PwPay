@@ -36,6 +36,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
       <path value="$PROJECT_DIR$/vendor/jschaedl/iban-validation" />
+      <path value="$PROJECT_DIR$/vendor/tox2ik/php-mysqli-aliases" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />

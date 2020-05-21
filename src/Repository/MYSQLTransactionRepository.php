@@ -24,8 +24,8 @@ final class MYSQLTransactionRepository implements TransactionRepository
     public function addTransaction(Transaction $trans): void
     {
         $query = <<<'QUERY'
-        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data)
-        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data)
+        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual)
+        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data);
 QUERY;
         $pdo = $this->database->connection();
 
@@ -48,16 +48,23 @@ QUERY;
         $statement->execute();
     }
 
-    public function getLatest5Trans(int $id): array
+    public function getTrans(int $id, bool $limit): array
     {
-        $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data DESC LIMIT 5;
+        if ($limit) {
+            $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC LIMIT 5;
 QUERY;
+        } else {
+            $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual;
+QUERY;
+        }
         $pdo = $this->database->connection();
 
         $statement = $pdo->prepare($query);
 
         $statement->bindParam('id', $id, PDO::PARAM_STR);
+        $statement->bindParam('limit', $limit, PDO::PARAM_STR);
 
         $statement->execute();
 
@@ -74,7 +81,7 @@ QUERY;
                     floatval($field['money']),
                     $field['tipo'],
                     $field['motiu'],
-                    DateTime::createFromFormat(self::DATE_FORMAT,$field['data'])
+                    DateTime::createFromFormat(self::DATE_FORMAT,$field['data_actual'])
                 );
             }
         }
@@ -87,5 +94,6 @@ QUERY;
     {
         // TODO: Implement updateStatus() method.
     }
+
 }
 

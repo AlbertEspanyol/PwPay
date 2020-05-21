@@ -66,7 +66,7 @@
                                             <hr class="login">
                                             <p class="has-text-grey has-text-centered">
                                                 {{ iban }}
-                                            </p>
+                                                {% if iban == 'You have not linked your bank account yet' %}
                                             <form action="{{ url_for('bank-form-show') }}" method="GET">
                                                 <div class="level-right">
                                                     <button class="button is-fullwidth is-large is-link">
@@ -77,6 +77,8 @@
                                                     </button>
                                                 </div>
                                             </form>
+                                                {% endif %}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

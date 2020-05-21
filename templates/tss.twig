@@ -1,0 +1,117 @@
+{% extends "base.twig" %}
+
+{% block title %}Dashboard page{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/dash.css"/>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <section class="hero is-info is-medium is-bold">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <div class="tabs is-centered">
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
+                                    <span class="navbar-item">
+                                        <button class="button is-light">
+                                            <span class="icon" style="color: black">
+                                                <i class="fas fa-door-open"></i>
+                                            </span>
+                                            <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                        </button>
+                                    </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight is-bold is-info">
+        <div class="hero-body">
+            <div class="container">
+                <div class="column is-8 is-offset-2">
+                    <hr class="login">
+                    <h1 class="is-size-10 subtitle has-text-centered">{{ mail }}</h1>
+                    <ul class="box">
+                        {% for ts in tss %}
+
+                            {% set verb = '' %}
+                            {% set verb2 = '' %}
+                            {% set flag = 0 %}
+
+                            {% if ( ts.tipo == 'request' and dst[loop.index - 1] == id ) or (ts.tipo == 'send' and src[loop.index - 1] == id) %}
+                                {% set flag = 1 %}
+                            {% endif %}
+
+                            {% if ts.tipo == 'request'%}
+                                {% set verb = 'Request' %}
+                                {% if flag == 1 %}
+                                    {% set verb2 = ' from' %}
+                                {% else %}
+                                    {% set verb2 = ' to' %}
+                                {% endif %}
+                            {% else %}
+                                {% set verb = 'Sent' %}
+                                {% if flag == 1 %}
+                                    {% set verb2 = ' to ' %}
+                                {% else %}
+                                    {% set verb2 = ' from' %}
+                                {% endif %}
+                            {% endif %}
+                            <li class="container">
+                                <div class="media">
+                                    <figure class="media-left">
+                                        {% if flag == 1 %}
+                                            <i style="color:red" class="fas fa-arrow-alt-circle-left fa-2x is-success"></i>
+                                        {% else %}
+                                            {% if ts.tipo == "Ingrés propi"%}
+                                                <i style="color:darkblue" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                            {% else %}
+                                                <i style="color:limegreen" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                            {% endif %}
+                                        {% endif %}
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <strong class="is-size-6">{{ verb }} </strong> {{ verb2 }} <strong>{{ names[loop.index - 1] }}</strong> <small class="date"> {{ ts.date|date('d-m-Y') }}</small>
+                                                <br>
+                                                {{ ts.motiu }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="media-right">
+                                        <div class="content">
+                                            {% if flag == 1 %}
+                                                <h1 class="subtitle has-text-black has-text-centered">
+                                                    - {{ ts.money }} €
+                                                </h1>
+                                            {% else %}
+                                                <h1 class="subtitle has-text-black has-text-centered">
+                                                    + {{ ts.money }} €
+                                                </h1>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% if not loop.last %}
+                                <hr>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

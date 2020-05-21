@@ -12,6 +12,7 @@ use \ProjWeb2\PRACTICA\Controller\ProfileController;
 use \ProjWeb2\PRACTICA\Controller\ChangePassController;
 use \ProjWeb2\PRACTICA\Controller\DashController;
 use \ProjWeb2\PRACTICA\Controller\BankController;
+use \ProjWeb2\PRACTICA\Controller\TransactionController;
 
 $app->get(
     '/',
@@ -91,19 +92,20 @@ $app->get(
 $app->get(
     '/account/bank-account',
     BankController::class . ":showBankForm"
-)->setName('bank-form-show')->add(RestrictedMiddleware::class);
+)->setName('bank-form-show');
 
 $app->post(
     '/account/bank-account',
     BankController::class . ":submitBank"
-)->setName('bank-form-submit')->add(RestrictedMiddleware::class);
+)->setName('bank-form-submit');
 
 $app->post(
     '/account/bank-account/load',
     BankController::class . ":addMoney"
-)->setName('bank-account-load')->add(RestrictedMiddleware::class);
-
-$app->any(
-    '/[]',
-    ErrorController::class . ":showError"
 )->setName('bank-account-load');
+
+$app->get(
+    '/account/transactions',
+    TransactionController::class . ":showTransactions"
+)->setName('transactions');
+

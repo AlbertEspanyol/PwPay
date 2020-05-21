@@ -6,6 +6,6 @@ namespace ProjWeb2\PRACTICA\Model;
 interface TransactionRepository
 {
     public function addTransaction(Transaction $trans): void;
-    public function getLatest5Trans(int $id): array;
+    public function getTrans(int $id,bool $limit): array;
     public function updateStatus(int $id): void;
 }
