@@ -88,7 +88,7 @@ QUERY;
         // TODO: Implement updateStatus() method.
     }
 
-    public function getTransactions(int $id) : array{
+    public function getAllTrans(int $id) : array{
         $query = <<<'QUERY'
          SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id;
 QUERY;

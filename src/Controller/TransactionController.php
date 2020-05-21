@@ -18,7 +18,7 @@ final class TransactionController {
         //S'agafa la id del user
         $id = $_SESSION['user_id'];
 
-        $transactions = $this->container->get('transaction_repository')->getTransactions($id);
+        $transactions = $this->container->get('transaction_repository')->getAllTrans($id);
 
         return $this->container->get('view')->render(
             $response,
