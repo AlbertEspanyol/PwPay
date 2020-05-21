@@ -48,16 +48,23 @@ QUERY;
         $statement->execute();
     }
 
-    public function getLatest5Trans(int $id): array
+    public function getTrans(int $id, bool $limit): array
     {
-        $query = <<<'QUERY'
+        if ($limit) {
+            $query = <<<'QUERY'
          SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC LIMIT 5;
 QUERY;
+        } else {
+            $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual;
+QUERY;
+        }
         $pdo = $this->database->connection();
 
         $statement = $pdo->prepare($query);
 
         $statement->bindParam('id', $id, PDO::PARAM_STR);
+        $statement->bindParam('limit', $limit, PDO::PARAM_STR);
 
         $statement->execute();
 
@@ -88,26 +95,5 @@ QUERY;
         // TODO: Implement updateStatus() method.
     }
 
-    public function getAllTrans(int $id) : array{
-        $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id;
-QUERY;
-        $pdo = $this->database->connection();
-
-        $statement = $pdo->prepare($query);
-
-        $statement->bindParam('id', $id, PDO::PARAM_STR);
-
-        $statement->execute();
-
-        $transactions = array();
-        while ($row = $statement->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            array_push($transactions,$row);
-        }
-
-        echo json_encode($transactions);
-
-        return $transactions;
-    }
 }
 

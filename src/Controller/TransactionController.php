@@ -18,17 +18,55 @@ final class TransactionController {
         //S'agafa la id del user
         $id = $_SESSION['user_id'];
 
-        $transactions = $this->container->get('transaction_repository')->getAllTrans($id);
+        $tss = $this->container->get('transaction_repository')->getTrans($id,false);
+        $email = $this->container->get('user_repository')->getInfoById('email', $id);
+
+        //Array que guarda els mails que ens interessa mostrar a partir de les ids
+        $names = [];
+
+        //Array que guarda les source_id i les dest_id de la taula transactions
+        $srcs = [];
+        $dsts = [];
+
+        if(!empty($tss)){
+            for($i = 0; $i < sizeof($tss); $i++){
+                $xd = $tss[$i];
+
+                //Es fiquen les ids que toquen
+                $srcs[$i] = $xd->getSourceUser();
+                $dsts[$i] = $xd->getDestUser();
+
+
+                $src = $xd->getSourceUser();
+                $dst = $xd->getDestUser();
+
+                //Si l'usuari ha estat el que ha efectuat la transaccio s'ha d'agafar el mail del destinatari per a mostrar-lo
+                if($src == $id) $src = $xd->getDestUser();
+                if($src == $id) {
+                    if($dst == $id){
+                        $src = "Me";
+                    } else {
+                        $src = $xd->getDestUser();
+                    }
+                }
+                if($src != "Me") {
+                    $names[$i] = $this->container->get('user_repository')->getInfoById('email', $src);
+                } else {
+                    $names[$i] = $src;
+                }
+            }
+        }
 
         return $this->container->get('view')->render(
             $response,
-            'transactions.twig',
+            'tss.twig',
             [
-                'transactions' => $transactions[0]
-                //'isLoad'=> !($checkEx == 'Unknown'),
-                //'ibanErr'=> $this->ibanErr,
-                //'iban'=>$this->iban,
-                //'owner_name'=>$this->owner
+                'mail' => $email,
+                'id'=>$id,
+                'tss'=>$tss,
+                'names'=>$names,
+                'src'=>$srcs,
+                'dst'=>$dsts
             ]
         );
     }

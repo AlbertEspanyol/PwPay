@@ -34,7 +34,7 @@ final class DashController {
         //S'agafen les dades de la bbdd
         $iban = $this->container->get('user_repository')->getInfoById('iban', $id);
         $money = $this->container->get('user_repository')->getInfoById('money', $id);
-        $tss = $this->container->get('transaction_repository')->getLatest5Trans($id);
+        $tss = $this->container->get('transaction_repository')->getTrans($id,true);
         $email = $this->container->get('user_repository')->getInfoById('email', $id);
 
         //Array que guarda els mails que ens interessa mostrar a partir de les ids

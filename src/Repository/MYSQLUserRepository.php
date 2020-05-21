@@ -250,7 +250,7 @@ QUERY;
         $statement2 = $pdo->prepare($query2);
 
         $date = new DateTime();
-        $tipo = "ingres propi";
+        $tipo = "Ingrés propi";
 
         $statement->bindParam('cash', $cash, PDO::PARAM_STR);
         $statement->bindParam('id', $id, PDO::PARAM_STR);
