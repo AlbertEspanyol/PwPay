@@ -23,17 +23,17 @@
                             <div class="navbar-end">
                                 <div class="tabs is-centered">
                                     <ul>
-                                        <li class="is-active"><a>Home</a></li>
+                                        <li class="is-active"><a href="{{ url_for('dash-show') }}">Account</a></li>
                                     </ul>
                                     <form action="{{ url_for('logout-post') }}" method="POST" >
-                                        <span class="navbar-item">
-                                            <button class="button is-light">
-                                                <span class="icon" style="color: black">
-                                                    <i class="fas fa-door-open"></i>
-                                                </span>
-                                                <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
-                                            </button>
-                                        </span>
+                                            <span class="navbar-item">
+                                                <button class="button is-light">
+                                                    <span class="icon" style="color: black">
+                                                        <i class="fas fa-door-open"></i>
+                                                    </span>
+                                                    <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                                </button>
+                                            </span>
                                     </form>
                                 </div>
                             </div>

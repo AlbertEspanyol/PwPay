@@ -7,32 +7,43 @@
 {% endblock %}
 
 {% block header %}
-<header>
-    <section class="hero is-info is-medium is-bold">
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div id="navbarMenu" class="navbar-menu">
-                        <div class="navbar-end">
-                            <div class="tabs is-centered">
-                                <form action="{{ url_for('logout-post') }}" method="POST" >
-                                    <span class="navbar-item">
-                                        <button class="button is-light">
-                                            <span class="icon" style="color: black">
-                                                <i class="fas fa-door-open"></i>
+    <header>
+        <section class="hero is-info is-medium is-bold">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item" href="../">
+                                <i class="fas fa-money-bill-alt"></i>
+                                <p class="">Fpay</p>
+                            </a>
+                            <span class="navbar-burger burger" data-target="navbarMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <div class="tabs is-centered">
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
+                                            <span class="navbar-item">
+                                                <button class="button is-light">
+                                                    <span class="icon" style="color: black">
+                                                        <i class="fas fa-door-open"></i>
+                                                    </span>
+                                                    <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                                </button>
                                             </span>
-                                            <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
-                                        </button>
-                                    </span>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </div>
-    </section>
-</header>
+                </nav>
+            </div>
+        </section>
+    </header>
 {% endblock %}
 
 {% block body %}

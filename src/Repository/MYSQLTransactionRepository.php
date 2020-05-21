@@ -56,7 +56,7 @@ QUERY;
 QUERY;
         } else {
             $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual;
+         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC;
 QUERY;
         }
         $pdo = $this->database->connection();

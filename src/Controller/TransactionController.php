@@ -15,6 +15,11 @@ final class TransactionController {
     }
 
     public function showTransactions(Request $request, Response $response): Response{
+
+        if (empty($_SESSION['user_id'])) {
+            return $response->withHeader('Location', '/sign-in')->withStatus(302);
+        }
+
         //S'agafa la id del user
         $id = $_SESSION['user_id'];
 
@@ -41,7 +46,6 @@ final class TransactionController {
                 $dst = $xd->getDestUser();
 
                 //Si l'usuari ha estat el que ha efectuat la transaccio s'ha d'agafar el mail del destinatari per a mostrar-lo
-                if($src == $id) $src = $xd->getDestUser();
                 if($src == $id) {
                     if($dst == $id){
                         $src = "Me";
