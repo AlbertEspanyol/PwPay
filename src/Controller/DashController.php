@@ -67,6 +67,10 @@ final class DashController {
             $iban = "You have not linked your bank account yet";
         }
 
+        $messages = $this->container->get('flash')->getMessages();
+
+        $notifications = $messages['notifications'] ?? [];
+
         /*******
         * Per mostrar les transtaccions es segueix la següent logica
         * Si es una transaccio request el destinatari es qui perd els diners
@@ -84,7 +88,8 @@ final class DashController {
                 'tss'=>$tss,
                 'names'=>$names,
                 'src'=>$srcs,
-                'dst'=>$dsts
+                'dst'=>$dsts,
+                'nots' => $notifications
             ]
         );
     }

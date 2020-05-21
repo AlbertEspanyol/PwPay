@@ -1,0 +1,141 @@
+{% extends "base.twig" %}
+
+{% block title %}Send Money Page{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/money.css"/>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <section class="hero is-info is-medium is-bold">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div id="navbarMenu" class="navbar-menu">
+                            <div class="navbar-end">
+                                <div class="tabs is-centered">
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
+                                    <span class="navbar-item">
+                                        <button class="button is-light">
+                                            <span class="icon" style="color: black">
+                                                <i class="fas fa-door-open"></i>
+                                            </span>
+                                            <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
+                                        </button>
+                                    </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section class="hero is-fullheight is-bold is-info">
+        <div class="hero-body">
+            <div class="container">
+                <form action="{{ url_for('dash-show') }}">
+                    <button class="btn">
+                        <i style="color: white" class="fas fa-arrow-circle-left fa-3x"></i>
+                    </button>
+                </form>
+                <form action="{{ url_for('send-money') }}" class="has-text-centered" method="POST">
+                    <div class="columns">
+                        <div class="column is-3 is-offset-1">
+                            <div class="section">
+                                <h3 class="title has-text-white">Pick an ammount</h3>
+                                <hr class="login-hr">
+                                <p class="subtitle has-text-white">Check if you have enough</p>
+                            </div>
+                            <div class="section is-medium">
+                                <div class="box">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="avatar">
+                                                <div class="image-upload">
+                                                    <img src="{{ pfp }}" width="150" height="150"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="media-content">
+                                                {% if moneyErr == 'xd' %}
+                                                <div class="control has-icons-left">
+                                                    <input id="klk" class="input is-rounded is-info is-large has-text-black" name="money2send" >
+                                                    <span class="icon is-small is-left">
+                                                    <i class="fas fa-euro-sign"></i>
+                                                  </span>
+                                                </div>
+                                                {% else %}
+                                                    <div class="control has-icons-left">
+                                                        <input id="klk" class="input is-rounded is-danger is-large has-text-black" name="money2send" >
+                                                        <span class="icon is-small is-left">
+                                                        <i class="fas fa-euro-sign"></i>
+                                                        </span>
+                                                    </div>
+                                                    <p class="has-text-centered has-text-danger">
+                                                        {{ moneyErr }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-1 is-offset-1 has-text-centered">
+                            <div class="section">
+                                <h3 class="subtitle has-text-info">Send Money</h3>
+                                <h3 class="subtitle has-text-info">Send</h3>
+                                <h6 class="subtitle has-text-info">Send</h6>
+                            </div>
+                            <i class="fas fa-angle-double-right fa-7x"></i>
+                            <button class="button is-large is-block is-dark" id="prof">
+                                Send
+                            </button>
+                        </div>
+                        <div class="column is-4 is-offset-1">
+                            <div class="section">
+                                <h3 class="title has-text-white">Pick the destinatary</h3>
+                                <hr class="login-hr">
+                                <p class="subtitle has-text-white">Enter the email</p>
+                            </div>
+                            <div class="section is-medium">
+                                <div class="box">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            {% if mailErr == 'xd' %}
+
+                                            <div class="control has-icons-left">
+                                                <input class="input is-rounded is-info is-large has-text-black" name="destinatary" type="email" placeholder="example@email.com">
+                                                <span class="icon is-small is-left">
+                                                <i class="fas fa-envelope"></i>
+                                              </span>
+                                            </div>
+                                            {% else %}
+                                                <div class="control has-icons-left">
+                                                    <input class="input is-rounded is-danger is-large has-text-black" name="destinatary" type="email" placeholder="example@email.com">
+                                                    <span class="icon is-small is-left">
+                                                <i class="fas fa-envelope"></i>
+                                                </span>
+                                                </div>
+                                                <p class="has-text-centered has-text-danger">
+                                                    {{ mailErr }}
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

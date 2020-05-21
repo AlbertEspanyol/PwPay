@@ -19,14 +19,16 @@ final class ValidationTools{
             $errors[0] = sprintf('The email is not valid');
         }
 
-        //String regex que basicament especifica que la contra ha de contenir majuscules ([A-Z]) minuscules ([a-z]) i nomnbres ([0-9])
-        $passpattern = '/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/';
 
-        //Si la contrasenya es mes petita de 6 caracters o si no compleix el regex anterior afegim error
-        if (strlen($password) < 6 || !preg_match($passpattern,$password) /*|| !preg_match("/[0-9]/",$password || !preg_match('/[A-Z]/', $password))*/) {
-            $errors[1] = sprintf('The password is not valid');
+        if($password != null) {
+            //String regex que basicament especifica que la contra ha de contenir majuscules ([A-Z]) minuscules ([a-z]) i nomnbres ([0-9])
+            $passpattern = '/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/';
+
+            //Si la contrasenya es mes petita de 6 caracters o si no compleix el regex anterior afegim error
+            if (strlen($password) < 6 || !preg_match($passpattern, $password) /*|| !preg_match("/[0-9]/",$password || !preg_match('/[A-Z]/', $password))*/) {
+                $errors[1] = sprintf('The password is not valid');
+            }
         }
-
         //En cas de que no sigui null, es a dir, l'usuari s'estigui registrant, comporvem les dades
         if($birthday !== null){
             //Transformem la data en un string
@@ -82,5 +84,18 @@ final class ValidationTools{
         }
 
         return true;
+    }
+
+    public function checkMoney(?string $money): string {
+        if(is_numeric($money)){
+            $cash = floatval($money);
+            if($cash < 0){
+                return "The input can't be negative";
+            }
+        } else {
+            return 'The input is not a number';
+        }
+
+        return 'xd';
     }
 }

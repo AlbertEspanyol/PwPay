@@ -40,6 +40,24 @@
         <div class="hero-body">
             <div class="container">
                 <div class="columns">
+                    <ul id="hideMe">
+                        {% for n in nots %}
+                        <li class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                        {{ n }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: limegreen" class="card-footer is-success">
+                                <p style="color: limegreen" class="is-success">
+                                    klk
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
                     <div class="column is-6 is-offset-3">
                         <div class="box">
                             <div class="media">
@@ -65,33 +83,33 @@
                                             </div>
                                             <hr class="login">
                                             <p class="has-text-grey has-text-centered">
-                                                {{ iban }}
-                                                {% if iban == 'You have not linked your bank account yet' %}
-                                            <form action="{{ url_for('bank-form-show') }}" method="GET">
-                                                <div class="level-right">
-                                                    <button class="button is-fullwidth is-large is-link">
-                                                        <span style="color: limegreen" class="icon">
-                                                             <i class="fas fa-piggy-bank"></i>
-                                                        </span>
-                                                        <span title="Hello from the other side" class=" title has-text-centered">BANK ACCOUNT</span>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                                {% endif %}
+                                                {{ iban|slice(0,4) }} {{ iban|slice(4,4) }} {{ iban|slice(8,4) }} {{ iban|slice(12,4) }} {{ iban|slice(16,4) }} {{ iban|slice(20,4) }}
                                             </p>
                                         </div>
                                     </div>
+                                    <form action="{{ url_for('bank-form-show') }}" method="GET">
+                                        <div class="level-right" id="ba">
+                                            <button class="button is-link">
+                                                        <span style="color: limegreen" class="icon">
+                                                             <i class="fas fa-piggy-bank"></i>
+                                                        </span>
+                                                <span title="Hello from the other side" class=" has-text-centered">ADD MONEY</span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                         <div class="columns">
                             <div class="column">
-                                <button class="button is-fullwidth is-large is-dark">
-                                    <span style="color: limegreen" class="icon">
-                                        <i class="fas fa-donate"></i>
-                                    </span>
-                                    <span title="Hello from the other side" class=" title has-text-centered">SEND</span>
-                                </button>
+                                <form action="{{ url_for('show-send') }}" method="GET">
+                                    <button class="button is-fullwidth is-large is-dark">
+                                        <span style="color: limegreen" class="icon">
+                                            <i class="fas fa-donate"></i>
+                                        </span>
+                                        <span title="Hello from the other side" class=" title has-text-centered">SEND</span>
+                                    </button>
+                                </form>
                             </div>
                             <div class="column">
                                 <button class="button is-fullwidth is-large is-dark">
@@ -102,9 +120,20 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="columns">
+                            <div class="column">
+                                <form action="{{ url_for('transactions') }}" method="GET">
+                                    <button class="button is-fullwidth is-large is-dark">
+                                        <span style="color: limegreen" class="icon">
+                                            <i class="far fa-list-alt"></i>
+                                        </span>
+                                        <span title="Hello from the other side" class=" title has-text-centered">TRANSACTIONS</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
 
                 <div class="column is-8 is-offset-2">
                     <hr class="login">

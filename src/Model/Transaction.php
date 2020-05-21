@@ -7,7 +7,7 @@ namespace ProjWeb2\PRACTICA\Model;
 use DateTime;
 
 final class Transaction{
-    private int $id;
+    private ?int $id;
     private int $source_user;
     private int $dest_user;
     private float $money;
@@ -25,7 +25,7 @@ final class Transaction{
      * @param string $motiu
      * @param DateTime $data
      */
-    public function __construct(int $id, int $source_user, int $dest_user, float $money, string $tipo, string $motiu, DateTime $data)
+    public function __construct(?int $id, int $source_user, int $dest_user, float $money, string $tipo, string $motiu, DateTime $data)
     {
         $this->id = $id;
         $this->source_user = $source_user;

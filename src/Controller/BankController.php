@@ -7,11 +7,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Iban\Validation\Validator;
 use Iban\Validation\Iban;
+use ProjWeb2\PRACTICA\Utils\ValidationTools;
 
 final class BankController {
     private float $money;
     private string $moneyErr;
     private string $ibanErr;
+    private ValidationTools $vt;
     private ContainerInterface $container;
     private string $iban;
     private string $owner;
@@ -20,6 +22,7 @@ final class BankController {
     {
         $this->money = 0;
         $this->container = $container;
+        $this->vt = new ValidationTools();
         $this->ibanErr = 'xd';
         $this->moneyErr = 'xd';
         $this->owner = '';
@@ -58,14 +61,25 @@ final class BankController {
     {
         if(!empty($_POST)){
             $id = $_SESSION['user_id'];
-            $this->money = $_POST['money'];
+            $cash = $_POST['money'];
 
-            if(!filter_var($this->money, FILTER_VALIDATE_FLOAT)){
-                $this->moneyErr = 'Input is wrong';
-            } else {
+            $this->moneyErr = $this->vt->checkMoney($cash);
+
+            if($this->moneyErr == 'xd'){
+                $this->money = floatval($cash);
                 $this->container->get('user_repository')->updateMoney($id,floatval($this->money));
                 $this->container->get('user_repository')->updateModifyDate($id);
             }
+            /*
+            if(!is_numeric($cash)){
+                $this->moneyErr = 'Input is wrong';
+            } else {
+                if($cash < 0){
+                    $this->moneyErr = 'Input is wrong';
+                } else{
+
+                }
+            }*/
         }
         return $this->showBankForm($request, $response);
     }
@@ -87,7 +101,8 @@ final class BankController {
                 'isLoad'=> !($checkEx == 'Unknown'),
                 'ibanErr'=> $this->ibanErr,
                 'iban'=>$checkEx,
-                'owner_name'=>$this->owner
+                'owner_name'=>$this->owner,
+                'moneyErr' => $this->moneyErr
             ]
         );
     }

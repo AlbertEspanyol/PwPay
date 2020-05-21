@@ -12,7 +12,10 @@ use \ProjWeb2\PRACTICA\Controller\ProfileController;
 use \ProjWeb2\PRACTICA\Controller\ChangePassController;
 use \ProjWeb2\PRACTICA\Controller\DashController;
 use \ProjWeb2\PRACTICA\Controller\BankController;
+use \ProjWeb2\PRACTICA\Controller\ErrorController;
+use \ProjWeb2\PRACTICA\Controller\SendMoneyController;
 use \ProjWeb2\PRACTICA\Controller\TransactionController;
+
 
 $app->get(
     '/',
@@ -75,37 +78,36 @@ $app->get(
 )->setName('dash-show')->add(RestrictedMiddleware::class);
 
 $app->get(
-    '/visits',
-    VisitsController::class . ":showVisits"
-)->setName('visits');
-
-$app->get(
-    '/cookies',
-    CookieMonsterController::class . ":showAdvice"
-)->setName('cookies');
-
-$app->get(
-    '/flash',
-    FlashController::class . ":addMessage"
-)->setName('flash');
-
-$app->get(
     '/account/bank-account',
     BankController::class . ":showBankForm"
-)->setName('bank-form-show');
+)->setName('bank-form-show')->add(RestrictedMiddleware::class);
 
 $app->post(
     '/account/bank-account',
     BankController::class . ":submitBank"
-)->setName('bank-form-submit');
+)->setName('bank-form-submit')->add(RestrictedMiddleware::class);
 
 $app->post(
     '/account/bank-account/load',
     BankController::class . ":addMoney"
-)->setName('bank-account-load');
+)->setName('bank-account-load')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/bank-account/load',
+    ErrorController::class . ":showError"
+)->setName('bank-account-load')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/money/send',
+    SendMoneyController::class . ":showSendForm"
+)->setName('show-send')->add(RestrictedMiddleware::class);;
+
+$app->post(
+    '/account/money/send',
+    SendMoneyController::class . ":send"
+)->setName('send-money')->add(RestrictedMiddleware::class);
 
 $app->get(
     '/account/transactions',
     TransactionController::class . ":showTransactions"
-)->setName('transactions');
-
+)->setName('transactions')->add(RestrictedMiddleware::class);
