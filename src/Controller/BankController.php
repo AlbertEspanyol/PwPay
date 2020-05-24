@@ -89,27 +89,5 @@ final class BankController {
         return $this->showBankForm($request, $response);
     }
 
-    public function showBankForm(Request $request, Response $response): Response
-    {
-        if (empty($_SESSION['user_id'])) {
-            return $response->withHeader('Location', '/sign-in')->withStatus(302);
-        }
-
-        $id = $_SESSION['user_id'];
-
-        $checkEx = $this->container->get('user_repository')->getInfoById('iban', $id);
-
-        return $this->container->get('view')->render(
-            $response,
-            'bankForm.twig',
-            [
-                'isLoad'=> !($checkEx == 'Unknown'),
-                'ibanErr'=> $this->ibanErr,
-                'iban'=>$checkEx,
-                'owner_name'=>$this->owner,
-                'moneyErr' => $this->moneyErr
-            ]
-        );
-    }
 
 }
