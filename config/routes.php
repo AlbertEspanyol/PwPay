@@ -1,9 +1,6 @@
 <?php
 
 use \ProjWeb2\PRACTICA\Controller\HomeController;
-use \ProjWeb2\PRACTICA\Controller\VisitsController;
-use \ProjWeb2\PRACTICA\Controller\CookieMonsterController;
-use \ProjWeb2\PRACTICA\Controller\FlashController;
 use \ProjWeb2\PRACTICA\Middleware\RestrictedMiddleware;
 use \ProjWeb2\PRACTICA\Controller\SignUpController;
 use \ProjWeb2\PRACTICA\Controller\SignInController;

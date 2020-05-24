@@ -39,6 +39,16 @@
     padding-right: 100px;
 }
 
+#tss{
+    position: sticky;
+    top: 125px;
+}
+
+#tssp{
+    position: absolute;
+    height: 100%;
+}
+
 #hideMe {
     position: absolute;
     top: 50px;
