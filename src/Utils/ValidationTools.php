@@ -2,6 +2,9 @@
 
 namespace ProjWeb2\PRACTICA\Utils;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 final class ValidationTools{
 
@@ -54,8 +57,8 @@ final class ValidationTools{
         }
 
         //Febrer
-        if($month = 2){
-            if((($year % 4 == 0) && (($year % 100 != 0) || ($year % 400 == 0))) && $month = 2) {
+        if($month == 2){
+            if((($year % 4 == 0) && (($year % 100 != 0)) || ($year % 400 == 0))) {
                 if ($day > 29) return false;
             } else{
                 if ($day > 28) return false;
@@ -68,13 +71,13 @@ final class ValidationTools{
         } else {
             if (date('Y') - $year == 18)
             {
-                if (date('m') - $month < 0)
+                if ((date('m') - $month) < 0)
                 {
                     return false;
                 } else {
-                    if (date('m') - $month == 0)
+                    if ((date('m') - $month) == 0)
                     {
-                        if (date('d') - $day < 0)
+                        if ((date('d') - $day) < 0)
                         {
                             return false;
                         }
@@ -97,5 +100,81 @@ final class ValidationTools{
         }
 
         return 'xd';
+    }
+
+    public function sendTokenMail(string $dst_mail, string $token): bool{
+        //S'envia el mail amb el link que conte el token slimapp.test/activate?token=xxxxxx (Grande Pando)
+        $mail = new PHPMailer(true);
+
+        try {
+            //Server settings
+            //$mail->SMTPDebug = 4;
+            // Enable verbose debug output
+            $mail->isSMTP();
+            $mail->Host       = '172.253.116.109';                    // Set the SMTP server to send through
+            $mail->Port       = 587;
+            $mail->SMTPAuth     = true;
+            $mail->SMTPSecure   = 'tls';// TCP port to connect to
+            $mail->SMTPAutoTLS = false;// Send using SMTP
+
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+
+            //Recipients
+            //Username to use for SMTP authentication - use full email address for gmail
+            $mail->Username = 'pwpayalbert@gmail.com';
+
+            //Password to use for SMTP authentication
+            $mail->Password = 'muzaman898!!!';
+
+            //Set who the message is to be sent from
+            $mail->setFrom('pwpayalbert@gmail.com', 'First Last');
+
+            //Set an alternative reply-to address
+            $mail->addReplyTo('replyto@example.com', 'First Last');
+
+            //Set who the message is to be sent to
+            $mail->addAddress('albert.espanol@students.salle.url.edu', 'John Doe');
+
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Activate your PwPay account!';
+            $mail->Body    = '<div>
+                                <div class="section">
+                                    <h3 class="title has has-text-centered">
+                                       Welcome to PwPay! 
+                                    </h3>
+                                    <hr>
+                                    <p class="subtitle">
+                                        Click the link to activate your account:
+                                    </p>
+                                </div>
+                                <div class="section">
+                                <a>
+                                    slimapp.test/activate?token=' . $token . '
+                                </a>
+                                </div>
+                              </div>';
+            $mail->AltBody = 'Click this link to activate your account: slimapp.test/activate?token=' . $token;
+
+            //send the message, check for errors
+            if (!$mail->send()) {
+                return false;
+            } else {
+                return true;
+                //Section 2: IMAP
+                //Uncomment these to save your message in the 'Sent Mail' folder.
+//                    if (save_mail($mail)) {
+//                       echo "Message saved!";
+//                    }
+            }
+
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

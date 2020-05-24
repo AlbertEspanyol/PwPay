@@ -52,7 +52,12 @@
 {% block body %}
     <section class="hero is-fullheight is-bold is-info">
         <div class="hero-body">
-            <div class="container has-text-centered">
+            <form action="{{ url_for('profile-show') }}">
+                <button class="btn">
+                    <i style="color: white" class="fas fa-arrow-circle-left fa-3x"></i>
+                </button>
+            </form>
+            <div class="container">
                 <div class="column is-6 is-offset-3">
                     <form class="has-text-centered" action="{{ url_for('pass-change-apply') }}" method="POST" enctype="multipart/form-data">
                         <div class="box">

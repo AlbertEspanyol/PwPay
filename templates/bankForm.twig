@@ -48,6 +48,11 @@
 {% block body %}
     <section class="hero is-fullheight is-bold is-info">
         <div class="hero-body">
+            <form action="{{ url_for('dash-show') }}">
+                <button class="btn">
+                    <i style="color: white" class="fas fa-arrow-circle-left fa-3x"></i>
+                </button>
+            </form>
             <div class="container has-text-centered">
                 <div class="column is-4 is-offset-4">
                     {% if isLoad %}

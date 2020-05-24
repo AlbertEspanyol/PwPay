@@ -41,7 +41,6 @@ final class TransactionController {
                 $srcs[$i] = $xd->getSourceUser();
                 $dsts[$i] = $xd->getDestUser();
 
-
                 $src = $xd->getSourceUser();
                 $dst = $xd->getDestUser();
 

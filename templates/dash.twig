@@ -80,6 +80,10 @@
                                                     <img src="{{ pfp }}" width="175" height="175"/>
                                                 </label>
                                                 <input id="file-input" type="submit"/>
+                                                <p class="has-text-centered has-text-info">
+                                                    <i class="fas fa-user-circle"></i>
+                                                    Profile
+                                                </p>
                                             </div>
                                         </div>
                                     </form>
@@ -87,27 +91,36 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <div class="field">
-                                            <div>
-                                                <h1 class="has-text-centered title is-size-1 has-text-black">
-                                                    {{ money }} €
-                                                </h1>
+                                            <div class="columns">
+                                                <div class="column is-7">
+                                                    <div class="level-right">
+                                                        <h1 class="has-text-centered title is-size-1 has-text-black">
+                                                            {{ money }} €
+                                                        </h1>
+                                                    </div>
+                                                </div>
+                                                <div class="column">
+                                                    <form action="{{ url_for('bank-form-show') }}" method="GET">
+                                                        <div class="level-left" id="ba">
+                                                            <button class="button is-large is-link">
+                                                            <span class="icon">
+                                                                 <i class="fas fa-plus"></i>
+                                                            </span>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                             <hr class="login">
                                             <p class="has-text-grey has-text-centered">
+                                                {% if iban == "You have not linked your bank account yet" %}
+                                                    {{ iban }}
+                                                {% else %}
                                                 {{ iban|slice(0,4) }} {{ iban|slice(4,4) }} {{ iban|slice(8,4) }} {{ iban|slice(12,4) }} {{ iban|slice(16,4) }} {{ iban|slice(20,4) }}
+                                                {% endif %}
                                             </p>
                                         </div>
                                     </div>
-                                    <form action="{{ url_for('bank-form-show') }}" method="GET">
-                                        <div class="level-right" id="ba">
-                                            <button class="button is-link">
-                                                        <span style="color: limegreen" class="icon">
-                                                             <i class="fas fa-piggy-bank"></i>
-                                                        </span>
-                                                <span title="Hello from the other side" class=" has-text-centered">ADD MONEY</span>
-                                            </button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -123,12 +136,14 @@
                                 </form>
                             </div>
                             <div class="column">
-                                <button class="button is-fullwidth is-large is-dark">
-                                    <span style="color: limegreen" class="icon">
-                                        <i class="fas fa-hand-holding-usd"></i>
-                                    </span>
-                                    <span title="Hello from the other side" class=" title has-text-centered">REQUEST</span>
-                                </button>
+                                <form action="{{ url_for('show-reqs') }}" method="GET">
+                                    <button class="button is-fullwidth is-large is-dark">
+                                        <span style="color: limegreen" class="icon">
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                        </span>
+                                        <span title="Hello from the other side" class=" title has-text-centered">REQUEST</span>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <div class="columns">
@@ -181,7 +196,11 @@
                                     {% if flag == 1 %}
                                         <i style="color:red" class="fas fa-arrow-alt-circle-left fa-2x is-success"></i>
                                     {% else %}
-                                        <i style="color:limegreen" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                        {% if ts.tipo == "in"%}
+                                            <i style="color:darkblue" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                        {% else %}
+                                            <i style="color:limegreen" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                        {% endif %}
                                     {% endif %}
                                 </figure>
                                 <div class="media-content">

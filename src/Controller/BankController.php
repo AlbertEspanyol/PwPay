@@ -2,12 +2,14 @@
 
 namespace ProjWeb2\PRACTICA\Controller;
 
+use ProjWeb2\PRACTICA\Model\Transaction;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Iban\Validation\Validator;
 use Iban\Validation\Iban;
 use ProjWeb2\PRACTICA\Utils\ValidationTools;
+use DateTime;
 
 final class BankController {
     private float $money;
@@ -53,7 +55,6 @@ final class BankController {
                 }
             }
         }
-
         return $this->showBankForm($request, $response);
     }
 
@@ -67,6 +68,20 @@ final class BankController {
 
             if($this->moneyErr == 'xd'){
                 $this->money = floatval($cash);
+
+                $trans = new Transaction(
+                    null,
+                    $id,
+                    $id,
+                    $this->money,
+                    'in',
+                    'in',
+                    new DateTime()
+                    );
+
+                $trans->setStatus('accepted');
+
+                $this->container->get('transaction_repository')->addTransaction($trans);
                 $this->container->get('user_repository')->updateMoney($id,floatval($this->money));
                 $this->container->get('user_repository')->updateModifyDate($id);
             }

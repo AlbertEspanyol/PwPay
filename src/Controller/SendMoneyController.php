@@ -31,7 +31,7 @@ final class SendMoneyController
             $money = $_POST['money2send'];
             $destMail = $_POST['destinatary'];
 
-            $this->moneyErr = $this->vt->checkMoney($money, $id);
+            $this->moneyErr = $this->vt->checkMoney($money);
             $money = floatval($money);
 
             if($this->moneyErr == 'xd' && $this->container->get('user_repository')->getInfoById('money', $id) < $money){
@@ -65,11 +65,13 @@ final class SendMoneyController
                             new DateTime()
                         );
 
+                        $trans->setStatus('accepted');
+
                         $this->container->get('user_repository')->updateMoney($id,-$money);
 
                         $this->container->get('transaction_repository')->addTransaction($trans);
 
-                        $this->container->get('flash')->addMessage('notifications', 'Sent ' . $money . '€ to ' . $destMail . ' successgully!');
+                        $this->container->get('flash')->addMessage('notifications', 'Sent ' . $money . '€ to ' . $destMail . ' successfully!');
 
                         return $response->withHeader('Location', '/account/summary')->withStatus(302);
                     }

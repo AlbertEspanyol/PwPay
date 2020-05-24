@@ -14,6 +14,7 @@ use \ProjWeb2\PRACTICA\Controller\DashController;
 use \ProjWeb2\PRACTICA\Controller\BankController;
 use \ProjWeb2\PRACTICA\Controller\ErrorController;
 use \ProjWeb2\PRACTICA\Controller\SendMoneyController;
+use \ProjWeb2\PRACTICA\Controller\RequestsController;
 use \ProjWeb2\PRACTICA\Controller\TransactionController;
 
 
@@ -106,6 +107,26 @@ $app->post(
     '/account/money/send',
     SendMoneyController::class . ":send"
 )->setName('send-money')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/money/requests',
+    RequestsController::class . ":showRequests"
+)->setName('show-reqs')->add(RestrictedMiddleware::class);
+
+$app->post(
+    '/account/money/requests',
+    RequestsController::class . ":makeRequest"
+)->setName('make-req')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/money/requests/pending',
+    RequestsController::class . ":showPending"
+)->setName('pending-reqs')->add(RestrictedMiddleware::class);
+
+$app->get(
+    '/account/money/requests/pending/{id}/accept',
+    RequestsController::class . ":accept"
+)->setName('accept-req')->add(RestrictedMiddleware::class);
 
 $app->get(
     '/account/transactions',

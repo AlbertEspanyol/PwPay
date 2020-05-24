@@ -112,66 +112,12 @@ final class SignUpController
             //Es guarda a la bbdd
             $this->container->get('user_repository')->save($user);
 
-            //print phpinfo();
-            //mail($data['email'], 'Activate your account', "slimapp.test/activate?token=" . $token);
-
-            //S'envia el mail amb el link que conte el token slimapp.test/activate?token=xxxxxx (Grande Pando)
-            $mail = new PHPMailer(true);
-
-            try {
-                //Server settings
-                $mail->SMTPDebug = 4;
-                // Enable verbose debug output
-                $mail->isSMTP();
-                $mail->Host       = '172.253.116.109';                    // Set the SMTP server to send through
-                $mail->Port       = 587;
-                $mail->SMTPAuth     = true;
-                $mail->SMTPSecure   = 'tls';// TCP port to connect to
-                $mail->SMTPAutoTLS = false;// Send using SMTP
-
-                $mail->SMTPOptions = array(
-                    'ssl' => array(
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true
-                    )
+            if(!$this->vt->sendTokenMail($data['email'], $token)){
+                return $this->container->get('view')->render(
+                    $response,
+                    'error.twig',
+                    []
                 );
-
-                //Recipients
-                //Username to use for SMTP authentication - use full email address for gmail
-                $mail->Username = 'pwpayalbert@gmail.com';
-
-                //Password to use for SMTP authentication
-                $mail->Password = 'muzaman898!!!';
-
-                //Set who the message is to be sent from
-                $mail->setFrom('pwpayalbert@gmail.com', 'First Last');
-
-                //Set an alternative reply-to address
-                $mail->addReplyTo('replyto@example.com', 'First Last');
-
-                //Set who the message is to be sent to
-                $mail->addAddress('albert.espanol@students.salle.url.edu', 'John Doe');
-
-                $mail->isHTML(true);                                  // Set email format to HTML
-                $mail->Subject = 'Here is the subject';
-                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-                //send the message, check for errors
-                if (!$mail->send()) {
-                    echo 'Mailer Error: '. $mail->ErrorInfo;
-                } else {
-                    echo 'Message sent!';
-                    //Section 2: IMAP
-                    //Uncomment these to save your message in the 'Sent Mail' folder.
-//                    if (save_mail($mail)) {
-//                       echo "Message saved!";
-//                    }
-                }
-
-            } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
 
         } catch (Exception $exception) {
@@ -192,7 +138,7 @@ final class SignUpController
                 'done' => false,
                 'icon' => 'fas fa-envelope',
                 'titleMsg' => '',
-                'subttlMsg' => 'Activa el compte accedint a aquesta adreça: slimapp.test/activate?token=' . $token . "\n (No hem estat capaços de fer funcionar la funció mail())"
+                'subttlMsg' => 'Activa el compte accedint al teu mail!'
             ]
         );
     }

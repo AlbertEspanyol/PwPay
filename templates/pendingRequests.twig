@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% block title %}Dashboard page{% endblock %}
+{% block title %}Pendings Requests Page{% endblock %}
 
 {% block styles %}
     <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/dash.css"/>
@@ -27,7 +27,7 @@
                         <div id="navbarMenu" class="navbar-menu">
                             <div class="navbar-end">
                                 <div class="tabs is-centered">
-                                        <form action="{{ url_for('logout-post') }}" method="POST" >
+                                    <form action="{{ url_for('logout-post') }}" method="POST" >
                                             <span class="navbar-item">
                                                 <button class="button is-light">
                                                     <span class="icon" style="color: black">
@@ -36,7 +36,7 @@
                                                     <span title="Hello from the other side" class="has-text-black has-text-centered">Log Out</span>
                                                 </button>
                                             </span>
-                                        </form>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -50,73 +50,80 @@
 {% block body %}
     <section class="hero is-fullheight is-bold is-info">
         <div class="hero-body">
-            <form action="{{ url_for('dash-show') }}">
+            <form action="{{ url_for('show-reqs') }}">
                 <button class="btn">
                     <i style="color: white" class="fas fa-arrow-circle-left fa-3x"></i>
                 </button>
             </form>
             <div class="container">
+                <ul id="hideMe">
+                    {% for n in msgs %}
+                        <li class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                        {{ n }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: limegreen" class="card-footer is-success">
+                                <p style="color: limegreen" class="is-success">
+                                    klk
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    {% for m in msgsErr %}
+                        <li class="card">
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                        {{ m }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: #dd0000" class="card-footer is-success">
+                                <p style="color: #dd0000" class="is-success">
+                                    klk
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
                 <div class="column is-8 is-offset-2">
                     <h1 class="is-size-10 subtitle has-text-centered">{{ mail }}</h1>
                     <ul class="box">
-                        {% for ts in tss %}
-
-                            {% set verb = '' %}
-                            {% set verb2 = '' %}
-                            {% set flag = 0 %}
-
-                            {% if ( ts.tipo == 'request' and dst[loop.index - 1] == id ) or (ts.tipo == 'send' and src[loop.index - 1] == id) %}
-                                {% set flag = 1 %}
-                            {% endif %}
-
-                            {% if ts.tipo == 'request'%}
-                                {% set verb = 'Request' %}
-                                {% if flag == 1 %}
-                                    {% set verb2 = ' from' %}
-                                {% else %}
-                                    {% set verb2 = ' to' %}
-                                {% endif %}
-                            {% else %}
-                                {% set verb = 'Sent' %}
-                                {% if flag == 1 %}
-                                    {% set verb2 = ' to ' %}
-                                {% else %}
-                                    {% set verb2 = ' from' %}
-                                {% endif %}
-                            {% endif %}
+                        {% for r in reqs %}
                             <li class="container">
                                 <div class="media">
                                     <figure class="media-left">
-                                        {% if flag == 1 %}
-                                            <i style="color:red" class="fas fa-arrow-alt-circle-left fa-2x is-success"></i>
-                                        {% else %}
-                                            {% if ts.tipo == "in"%}
-                                                <i style="color:darkblue" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
-                                            {% else %}
-                                                <i style="color:limegreen" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
-                                            {% endif %}
-                                        {% endif %}
+                                        <i style="color: #ffbd00" class="fas fa-share fa-2x"></i>
                                     </figure>
                                     <div class="media-content">
-                                        <div class="content">
+                                        <div class="content" >
                                             <p>
-                                                <strong class="is-size-6">{{ verb }} </strong> {{ verb2 }} <strong>{{ names[loop.index - 1] }}</strong> <small class="date"> {{ ts.date|date('d-m-Y') }}</small>
+                                                <strong class="is-size-6">{{ names[loop.index - 1] }} </strong> sent you a request <strong></strong> <small class="date"> {{ ts.date|date('d-m-Y') }}</small>
                                                 <br>
-                                                {{ ts.motiu }}
+                                                {{ r.motiu }}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="media-right">
-                                        <div class="content">
-                                            {% if flag == 1 %}
-                                                <h1 class="subtitle has-text-black has-text-centered">
-                                                    - {{ ts.money }} €
-                                                </h1>
-                                            {% else %}
-                                                <h1 class="subtitle has-text-black has-text-centered">
-                                                    + {{ ts.money }} €
-                                                </h1>
-                                            {% endif %}
+                                        <div class="columns">
+                                            <div class="column">
+                                                <div class="content">
+                                                    <h1 class="subtitle has-text-black has-text-centered">
+                                                        {{ r.money }} €
+                                                    </h1>
+                                                </div>
+                                            </div>
+                                            <div class="column">
+                                                <form action="{{ url_for('pending-reqs') }}/{{ r.id }}/accept" method="GET">
+                                                    <button class="button is-medium is-info">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

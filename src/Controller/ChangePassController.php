@@ -41,6 +41,9 @@ final class ChangePassController
                 $this->errors[2] = 'ok';
                 $this->container->get('user_repository')->updatePass($id, md5($new));
                 $this->container->get('user_repository')->updateModifyDate($id);
+
+                $this->container->get('flash')->addMessage('pass', 'Changed password successfully!');
+                return $response->withHeader('Location', '/profile')->withStatus(302);
             }
         }
 

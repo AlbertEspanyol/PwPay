@@ -21,3 +21,9 @@ header{
 .field{
     padding-bottom: 10px;
 }
+
+.btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}

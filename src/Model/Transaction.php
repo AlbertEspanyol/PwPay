@@ -14,6 +14,7 @@ final class Transaction{
     private string $tipo;
     private string $motiu;
     private DateTime $data;
+    private string $status;
 
     /**
      * Transaction constructor.
@@ -24,6 +25,7 @@ final class Transaction{
      * @param string $tipo
      * @param string $motiu
      * @param DateTime $data
+     * @param string $status
      */
     public function __construct(?int $id, int $source_user, int $dest_user, float $money, string $tipo, string $motiu, DateTime $data)
     {
@@ -34,6 +36,7 @@ final class Transaction{
         $this->tipo = $tipo;
         $this->motiu = $motiu;
         $this->data = $data;
+        $this->status = "pending";
     }
 
     /**
@@ -148,5 +151,19 @@ final class Transaction{
         $this->data = $data;
     }
 
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
 }

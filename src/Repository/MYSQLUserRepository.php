@@ -240,26 +240,13 @@ QUERY;
         $query = <<<'QUERY'
          UPDATE user SET money = money + :cash WHERE id = :id;
 QUERY;
-        $query2 = <<<'QUERY'
-        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual)
-        VALUES(:id, :id, :cash, :tipo, :tipo, :date_now)
-QUERY;
         $pdo = $this->database->connection();
 
         $statement = $pdo->prepare($query);
-        $statement2 = $pdo->prepare($query2);
-
-        $date = new DateTime();
-        $tipo = "Ingrés propi";
 
         $statement->bindParam('cash', $cash, PDO::PARAM_STR);
         $statement->bindParam('id', $id, PDO::PARAM_STR);
-        $statement2->bindValue('date_now', $date->format(self::DATE_FORMAT), PDO::PARAM_STR);
-        $statement2->bindParam('cash', $cash, PDO::PARAM_STR);
-        $statement2->bindParam('id', $id, PDO::PARAM_STR);
-        $statement2->bindParam('tipo', $tipo, PDO::PARAM_STR);
 
         $statement->execute();
-        $statement2->execute();
     }
 }

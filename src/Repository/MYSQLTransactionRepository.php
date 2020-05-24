@@ -24,8 +24,8 @@ final class MYSQLTransactionRepository implements TransactionRepository
     public function addTransaction(Transaction $trans): void
     {
         $query = <<<'QUERY'
-        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual)
-        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data);
+        INSERT INTO transactions(source_user, dest_user, money, tipo, motiu, data_actual, status)
+        VALUES(:source_user, :dest_user, :money, :tipo, :motiu, :data, :status);
 QUERY;
         $pdo = $this->database->connection();
 
@@ -36,7 +36,9 @@ QUERY;
         $money = $trans->getMoney();
         $tipo = $trans->getTipo();
         $motiu = $trans->getMotiu();
-        $data = $trans->getData()->format(self::DATE_FORMAT);;
+        $data = $trans->getData()->format(self::DATE_FORMAT);
+        $status = $trans->getStatus();
+
 
         $statement->bindParam('source_user', $source_user, PDO::PARAM_STR);
         $statement->bindParam('dest_user', $dest_user, PDO::PARAM_STR);
@@ -44,6 +46,8 @@ QUERY;
         $statement->bindParam('tipo', $tipo, PDO::PARAM_STR);
         $statement->bindParam('motiu', $motiu, PDO::PARAM_STR);
         $statement->bindParam('data', $data, PDO::PARAM_STR);
+        $statement->bindParam('status', $status, PDO::PARAM_STR);
+
 
         $statement->execute();
     }
@@ -52,11 +56,11 @@ QUERY;
     {
         if ($limit) {
             $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC LIMIT 5;
+         SELECT * FROM transactions WHERE (source_user = :id OR dest_user = :id) AND status LIKE 'accepted' ORDER BY data_actual DESC LIMIT 5;
 QUERY;
         } else {
             $query = <<<'QUERY'
-         SELECT * FROM transactions WHERE source_user = :id OR dest_user = :id ORDER BY data_actual DESC;
+         SELECT * FROM transactions WHERE (source_user = :id OR dest_user = :id) AND status LIKE 'accepted' ORDER BY data_actual DESC;
 QUERY;
         }
         $pdo = $this->database->connection();
@@ -90,9 +94,76 @@ QUERY;
 
     }
 
-    public function updateStatus(int $id): void
+    public function getRequests(int $id): array
     {
-        // TODO: Implement updateStatus() method.
+        $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE dest_user = :id AND dest_user NOT LIKE source_user AND status LIKE 'pending';
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $bbdd_array = $statement->fetchAll();
+        $tss = [];
+
+        if(!empty($bbdd_array)){
+            for($i = 0; $i < sizeof($bbdd_array); $i++){
+                $field = $bbdd_array[$i];
+                $tss[$i] = new Transaction(
+                    intval($field['id']),
+                    intval($field['source_user']),
+                    intval($field['dest_user']),
+                    floatval($field['money']),
+                    $field['tipo'],
+                    $field['motiu'],
+                    DateTime::createFromFormat(self::DATE_FORMAT,$field['data_actual'])
+                );
+            }
+        }
+
+        return $tss;
+    }
+
+    public function getTransById(int $id): Transaction
+    {
+        $query = <<<'QUERY'
+         SELECT * FROM transactions WHERE id = :id;
+QUERY;
+
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $arr = $statement->fetch();
+
+        $trans = new Transaction(intval($arr['id']), intval($arr['source_user']), intval($arr['dest_user']), floatval($arr['money']), $arr['tipo'], $arr['motiu'], DateTime::createFromFormat(self::DATE_FORMAT,$arr['data_actual']));
+
+        $trans->setStatus($arr['status']);
+
+        return $trans;
+    }
+
+    public function updateStatus(int $id, string $status): void
+    {
+        $query = <<<'QUERY'
+         UPDATE transactions SET status = :status WHERE id = :id;
+QUERY;
+        $pdo = $this->database->connection();
+
+        $statement = $pdo->prepare($query);
+
+        $statement->bindParam('status', $status, PDO::PARAM_STR);
+        $statement->bindParam('id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
     }
 
 }

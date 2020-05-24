@@ -116,6 +116,10 @@ final class ProfileController
         $email = $this->container->get('user_repository')->getInfoById('email', $id);
         $birth = $this->container->get('user_repository')->getInfoById('birthday', $id);
 
+        $messages = $this->container->get('flash')->getMessages();
+
+        $notifications = $messages['pass'] ?? [];
+
         return $this->container->get('view')->render(
             $response,
             'profile.twig',
@@ -124,7 +128,8 @@ final class ProfileController
                 'email'=>$email,
                 'birth'=>$birth,
                 'pfp' => $path,
-                'errors' => $this->errors
+                'errors' => $this->errors,
+                'nots' => $notifications
             ]
         );
     }
