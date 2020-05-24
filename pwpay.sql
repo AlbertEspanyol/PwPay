@@ -24,6 +24,7 @@ create table user(
     money float,
     active tinyint(1),
     token varchar(255),
+    pfp_path varchar(255),
     bank_owner varchar(255),
     iban varchar(255),
     PRIMARY KEY (id)
