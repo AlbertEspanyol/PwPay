@@ -88,7 +88,6 @@ final class BankController {
         }
         return $this->showBankForm($request, $response);
     }
-
     public function showBankForm(Request $request, Response $response): Response
     {
         if (empty($_SESSION['user_id'])) {
@@ -111,5 +110,4 @@ final class BankController {
             ]
         );
     }
-
 }
