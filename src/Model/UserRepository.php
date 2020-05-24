@@ -18,4 +18,5 @@ interface UserRepository
     public function activateUser(?string $token): void;
     public function updateModifyDate(int $id) :void;
     public function updateBankAndOwner(int $id, string $iban, string $owner) :void;
+    public function updateMoney(int $id, float $cash) :void;
 }

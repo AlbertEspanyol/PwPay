@@ -3,8 +3,7 @@
 {% block title %}Pendings Requests Page{% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/dash.css"/>
-    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/money.css"/>
+    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/req.css"/>
 {% endblock %}
 
 {% block header %}
@@ -58,41 +57,24 @@
             <div class="container">
                 <ul id="hideMe">
                     {% for n in msgs %}
-                        <li class="card">
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        {{ n }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: limegreen" class="card-footer is-success">
-                                <p style="color: limegreen" class="is-success">
-                                    klk
-                                </p>
-                            </div>
+                        <li style="background: limegreen; border-radius: 8px" class="box has-text-white">
+                            {{ n }}
                         </li>
                     {% endfor %}
-                    {% for m in msgsErr %}
-                        <li class="card">
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        {{ m }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: #dd0000" class="card-footer is-success">
-                                <p style="color: #dd0000" class="is-success">
-                                    klk
-                                </p>
-                            </div>
+                    {% for m in errMsgs %}
+                        <li style="background: #dd0000; border-radius: 8px" class="box has-text-white">
+                            {{ m }}
                         </li>
                     {% endfor %}
                 </ul>
                 <div class="column is-8 is-offset-2">
                     <h1 class="is-size-10 subtitle has-text-centered">{{ mail }}</h1>
                     <ul class="box">
+                        {% if reqs is empty %}
+                        <li class="container has-text-centered">
+                            You don't have requests at the moment
+                        </li>
+                        {% else %}
                         {% for r in reqs %}
                             <li class="container">
                                 <div class="media">
@@ -132,6 +114,7 @@
                                 <hr>
                             {% endif %}
                         {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             </div>

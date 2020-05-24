@@ -49,34 +49,38 @@ final class SendMoneyController
             }
 
             if($flag){
-                if($this->container->get('user_repository')->checkActiveWEmail($destMail))
-                {
-                    $this->mailErr =$this->vt->isValid($destMail, null, null);
-                    if($this->mailErr[0] == 'xd' && $this->moneyErr == 'xd'){
-                        $dstId = $this->container->get('user_repository')->getId($destMail);
-
-                        $trans = new Transaction(
-                            null,
-                            $id,
-                            $dstId,
-                            $money,
-                            'send',
-                            'klk',
-                            new DateTime()
-                        );
-
-                        $trans->setStatus('accepted');
-
-                        $this->container->get('user_repository')->updateMoney($id,-$money);
-
-                        $this->container->get('transaction_repository')->addTransaction($trans);
-
-                        $this->container->get('flash')->addMessage('notifications', 'Sent ' . $money . '€ to ' . $destMail . ' successfully!');
-
-                        return $response->withHeader('Location', '/account/summary')->withStatus(302);
-                    }
+                if($this->container->get('user_repository')->getInfoById('email', $id) == $destMail){
+                    $this->mailErr[0] = 'You cannot send money to yourself';
                 } else {
-                    $this->mailErr[0] = 'This user is not active';
+                    if ($this->container->get('user_repository')->checkActiveWEmail($destMail)) {
+                        $this->mailErr = $this->vt->isValid($destMail, null, null);
+                        if ($this->mailErr[0] == 'xd' && $this->moneyErr == 'xd') {
+                            $dstId = $this->container->get('user_repository')->getId($destMail);
+
+                            $trans = new Transaction(
+                                null,
+                                $id,
+                                $dstId,
+                                $money,
+                                'send',
+                                'klk',
+                                new DateTime()
+                            );
+
+                            $trans->setStatus('accepted');
+
+                            $this->container->get('user_repository')->updateMoney($id, -$money);
+                            $this->container->get('user_repository')->updateMoney($dstId, $money);
+
+                            $this->container->get('transaction_repository')->addTransaction($trans);
+
+                            $this->container->get('flash')->addMessage('notifications', 'Sent ' . $money . '€ to ' . $destMail . ' successfully!');
+
+                            return $response->withHeader('Location', '/account/summary')->withStatus(302);
+                        }
+                    } else {
+                        $this->mailErr[0] = 'This user is not active';
+                    }
                 }
             } else{
                 $this->mailErr[0] = 'This user does not exist';

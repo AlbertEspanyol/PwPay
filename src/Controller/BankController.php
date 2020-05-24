@@ -85,16 +85,6 @@ final class BankController {
                 $this->container->get('user_repository')->updateMoney($id,floatval($this->money));
                 $this->container->get('user_repository')->updateModifyDate($id);
             }
-            /*
-            if(!is_numeric($cash)){
-                $this->moneyErr = 'Input is wrong';
-            } else {
-                if($cash < 0){
-                    $this->moneyErr = 'Input is wrong';
-                } else{
-
-                }
-            }*/
         }
         return $this->showBankForm($request, $response);
     }

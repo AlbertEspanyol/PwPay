@@ -41,6 +41,7 @@
 
 #hideMe {
     position: absolute;
+    top: 50px;
     -webkit-animation: cssAnimation 0s ease-in 5s forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;

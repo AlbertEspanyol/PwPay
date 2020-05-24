@@ -2,8 +2,12 @@
 
 {% block title %}Home page{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/land.css"/>
+{% endblock %}
+
+
 {% block header %}
-    <header>
         <section class="hero is-info is-medium is-bold">
             <div class="hero-head">
                 <nav class="navbar">
@@ -76,39 +80,44 @@
                     <h2 class="subtitle">
                         Amb la nova pàgina web PW PAY podràs enviar, rebre i fer ingressos al teu compte bancari de manera àgil i senzilla.<br/>
                         Una web creada per dos enginyers catalans de La Conca de Barberà feta en honor a l'Andrea, que va tornar a Mèxic <br/>degut a la pandèmia del SARS-CoV-2 i la COVID-19.
-
                     </h2>
                 </div>
             </div>
         </section>
-    </header>
 {% endblock %}
 
 {% block body %}
-    <section class="hero is-light">
-        <div class="hero-body">
-            <div class="columns is-centered">
-                <div class="column has-text-centered">
-                    <i class="fas fa-tachometer-alt fa-7x"></i>
+        <section class="hero is-light">
+            <div class="hero-body">
+                <div class="columns is-centered" id="baixa">
+                    <div class="column has-text-centered">
+                        <i class="fas fa-tachometer-alt fa-7x"></i>
+                    </div>
+                    <div class="column has-text-centered">
+                        <i class="fas fa-shield-alt fa-7x"></i>
+                    </div>
+                    <div class="column has-text-centered">
+                        <i class="fas fa-box-open fa-7x"></i>
+                    </div>
                 </div>
-                <div class="column has-text-centered">
-                    <i class="fas fa-shield-alt fa-7x"></i>
-                </div>
-                <div class="column has-text-centered">
-                    <i class="fas fa-box-open fa-7x"></i>
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        El servei més ràpid de la república
+                    </div>
+                    <div class="column has-text-centered">
+                        Protegit per la justícia de bèlgica
+                    </div>
+                    <div class="column has-text-centered">
+                        97% transparent (3% menys per problemes tècnics)
+                    </div>
                 </div>
             </div>
-            <div class="columns is-centered">
-                <div class="column has-text-centered">
-                    El servei més ràpid de la república
-                </div>
-                <div class="column has-text-centered">
-                    Protegit per la justícia de bèlgica
-                </div>
-                <div class="column has-text-centered">
-                    97% transparent (3% menys per problemes tècnics)
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+{% endblock %}
+
+{% block footer %}
+    <footer  class="hero-foot is-light">
+
+    </footer>
+
 {% endblock %}

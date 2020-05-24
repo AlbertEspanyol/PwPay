@@ -53,20 +53,9 @@
                 <div class="columns">
                     <ul id="hideMe">
                         {% for n in nots %}
-                        <li class="card">
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        {{ n }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: limegreen" class="card-footer is-success">
-                                <p style="color: limegreen" class="is-success">
-                                    klk
-                                </p>
-                            </div>
-                        </li>
+                            <li style="background: limegreen; border-radius: 8px" class="box has-text-white">
+                                {{ n }}
+                            </li>
                         {% endfor %}
                     </ul>
                     <div class="column is-6 is-offset-3">
@@ -165,6 +154,11 @@
                     <hr class="login">
                     <h1 class="is-size-10 subtitle has-text-centered">{{ mail }}</h1>
                     <ul class="box">
+                        {% if tss is empty %}
+                            <li class="container has-text-centered subtitle has-text-black">
+                                You don't have any transactions yet :(
+                            </li>
+                        {% else %}
                         {% for ts in tss %}
 
                             {% set verb = '' %}
@@ -197,7 +191,7 @@
                                         <i style="color:red" class="fas fa-arrow-alt-circle-left fa-2x is-success"></i>
                                     {% else %}
                                         {% if ts.tipo == "in"%}
-                                            <i style="color:darkblue" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
+                                            <i style="color:darkblue" class="fas fa-arrow-alt-circle-down fa-2x is-success"></i>
                                         {% else %}
                                             <i style="color:limegreen" class="fas fa-arrow-alt-circle-right fa-2x is-success"></i>
                                         {% endif %}
@@ -206,7 +200,11 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong class="is-size-6">{{ verb }} </strong> {{ verb2 }} <strong>{{ names[loop.index - 1] }}</strong> <small class="date"> {{ ts.date|date('d-m-Y') }}</small>
+                                            {% if ts.tipo == "in"%}
+                                            <strong class="is-size-6">Desposit</strong>
+                                            {% else %}
+                                                <strong class="is-size-6">{{ verb }} </strong> {{ verb2 }} <strong>{{ names[loop.index - 1] }}</strong> <small class="date"> {{ ts.date|date('d-m-Y') }}</small>
+                                            {% endif %}
                                             <br>
                                             {{ ts.motiu }}
                                         </p>
@@ -231,6 +229,7 @@
                         <hr>
                         {% endif %}
                         {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>
             </div>

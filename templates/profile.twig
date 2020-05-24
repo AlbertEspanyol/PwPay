@@ -61,19 +61,8 @@
             <div class="container">
                 <ul id="hideMe">
                     {% for n in nots %}
-                        <li class="card">
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        {{ n }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="background: limegreen" class="card-footer is-success">
-                                <p style="color: limegreen" class="is-success">
-                                    klk
-                                </p>
-                            </div>
+                        <li style="background: limegreen; border-radius: 8px" class="box has-text-white">
+                            {{ n }}
                         </li>
                     {% endfor %}
                 </ul>
