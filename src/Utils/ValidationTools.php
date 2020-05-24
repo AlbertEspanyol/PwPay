@@ -139,7 +139,7 @@ final class ValidationTools{
             $mail->addReplyTo('replyto@example.com', 'First Last');
 
             //Set who the message is to be sent to
-            $mail->addAddress('albert.espanol@students.salle.url.edu', 'John Doe');
+            $mail->addAddress('carlos.fl@students.salle.url.edu', 'John Doe');
 
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Activate your PwPay account!';
