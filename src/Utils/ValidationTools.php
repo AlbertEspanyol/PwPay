@@ -18,7 +18,7 @@ final class ValidationTools{
         $popmail = explode('@', $email);
 
         //Si el string no s'asembla ni pa atras a un mail o si no es del domini 'salle.url.edu' li afegim un missatge d'error
-        if (false === filter_var($email, FILTER_VALIDATE_EMAIL) || $popmail[1] !== "salle.url.edu") {
+        if (false === filter_var($email, FILTER_VALIDATE_EMAIL) || ($popmail[1] !== "salle.url.edu" && $popmail[1] !== "students.salle.url.edu")) {
             $errors[0] = sprintf('The email is not valid');
         }
 
@@ -139,7 +139,7 @@ final class ValidationTools{
             $mail->addReplyTo('replyto@example.com', 'First Last');
 
             //Set who the message is to be sent to
-            $mail->addAddress('carlos.fl@students.salle.url.edu', 'John Doe');
+            $mail->addAddress($dst_mail, 'John Doe');
 
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Activate your PwPay account!';
